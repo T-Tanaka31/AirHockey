@@ -2,11 +2,11 @@
 //		ヘッダーをインクルードする場所
 //	============================================================
 #include <DxLib.h>
-#include "Definition.h"
+#include "Definition/Definition.h"
 #include "Controller/Controller.h"
 #include "GameObject/Attacker/Attacker.h"
 #include "GameObject/Attacker/EAttacker.h"
-#include "../制作其の2/GameObject/Pack/Pack.h"
+#include "GameObject/Pack/Pack.h"
 
 
 //	============================================================
@@ -148,30 +148,30 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			float Yver2 = 0;
 
 			for (int i = 0; i < 500; i++) {
-				DrawLine(x1, y1, x2, y2, green);    // 線を描画
+				DrawLine(x1, y1, x2, y2, COLOR_GREEN);    // 線を描画
 				x1 += 10;
 				x2 += 10;
 			}
 
 			for (int i = 0; i < 500; i++) {
-				DrawLine(0, y1, Xver2, Yver2, green);
+				DrawLine(0, y1, Xver2, Yver2, COLOR_GREEN);
 				y1 += 10;
 				Yver2 += 10;
 			}
 
-			DrawLine(WINDOW_WIDTH / 2, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT - 400, blue);
+			DrawLine(WINDOW_WIDTH / 2, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT - 400, COLOR_BLUE);
 
-			DrawLine(WINDOW_WIDTH / 2, 400, WINDOW_WIDTH / 2, WINDOW_HEIGHT, blue);
+			DrawLine(WINDOW_WIDTH / 2, 400, WINDOW_WIDTH / 2, WINDOW_HEIGHT, COLOR_BLUE);
 
-			DrawCircle(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 100, blue, FALSE);
+			DrawCircle(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 100, COLOR_BLUE, FALSE);
 
-			DrawLine(40, 200, 40, 400, yellow);
-			DrawLine(0, (WINDOW_HEIGHT * 2) / 3, 40, (WINDOW_HEIGHT * 2) / 3, yellow);
-			DrawLine(0, 400, 40, 400, yellow);
+			DrawLine(40, 200, 40, 400, COLOR_YELLOW);
+			DrawLine(0, (WINDOW_HEIGHT * 2) / 3, 40, (WINDOW_HEIGHT * 2) / 3, COLOR_YELLOW);
+			DrawLine(0, 400, 40, 400, COLOR_YELLOW);
 
-			DrawLine(1160, 200, 1160, 400, yellow);
-			DrawLine(1200, 200, 1160, 200, yellow);
-			DrawLine(1200, 400, 1160, 400, yellow);
+			DrawLine(1160, 200, 1160, 400, COLOR_YELLOW);
+			DrawLine(1200, 200, 1160, 200, COLOR_YELLOW);
+			DrawLine(1200, 400, 1160, 400, COLOR_YELLOW);
 
 		}
 #endif

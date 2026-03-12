@@ -1,7 +1,7 @@
 #pragma once
-#include "../Definition.h"
-#include "../GameObject/GameObject.h"
-#include "../GameObject/Pack/Pack.h"
+#include "../../Definition/Definition.h"
+#include "../GameObject.h"
+#include "../Pack/Pack.h"
 	
 
 

@@ -1,6 +1,5 @@
 #include "Pack.h"
-//#include "../制作其の2/GameObject/Attacker/Attacker.h"
-#include "../Definition.h"
+#include "../../Definition/Definition.h"
 #include <cmath>
 
 Pack::Pack()
@@ -16,7 +15,7 @@ Pack::Pack()
 	, eScore(0)
 	, Str()
 	, chisato(false)
-	, keke (false){
+	, keke(false) {
 }
 
 Pack::~Pack() {
@@ -61,13 +60,14 @@ void Pack::Update() {
 		WaitTimer(500);
 	}
 
+#if _DEBUG
 	if (keke == true) {
 		Haikei = LoadGraph("../../Res/keke.jpg");
 	}
 	if (chisato == true) {
 		Haikei = LoadGraph("../../Res/chisato.jpg");
 	}
-
+#endif
 	vx *= friction;
 	x += vx;
 	vy *= friction;
@@ -87,17 +87,21 @@ void Pack::Render() {
 	bool i = DrawCircle(x, y, radius2, GetColor(255, 208, 16), TRUE); // 赤い円でキャラクターを描画
 
 	wsprintf(Str, "%d - %d", pScore, eScore);
-	DrawString(WINDOW_WIDTH / 2 - 90, 10, Str, red);
+	DrawString(WINDOW_WIDTH / 2 - 90, 10, Str, COLOR_RED);
 
 	if (pScore >= 7) {
 		wsprintf(Str, "1Pの勝利");
-		DrawString(WINDOW_WIDTH / 2 - 90, WINDOW_HEIGHT / 2 , Str, red);
+		DrawString(WINDOW_WIDTH / 2 - 90, WINDOW_HEIGHT / 2, Str, COLOR_RED);
+#if _DEBUG
 		keke = true;
+#endif
 	}
 	else if (eScore >= 7) {
 		wsprintf(Str, "2Pの勝利");
-		DrawString(WINDOW_WIDTH / 2 - 90, WINDOW_HEIGHT / 2, Str, red);
+		DrawString(WINDOW_WIDTH / 2 - 90, WINDOW_HEIGHT / 2, Str, COLOR_RED);
+#if _DEBUG
 		chisato = true;
+#endif
 	}
 
 

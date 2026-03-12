@@ -1,8 +1,7 @@
 #pragma once
 #include <vector>
-#include "DxLib.h"
-#include "../Definition.h"
-//#include "../êßçÏë¥ÇÃ2/GameObject/Attacker/Attacker.h"
+#include <DxLib.h>
+#include "../../Definition/Definition.h"
 
 class Pack {
 	

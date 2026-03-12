@@ -1,6 +1,6 @@
 #include "TimeManager.h"
 #include <DxLib.h>
-#include "../Definition.h"
+#include "../Definition/Definition.h"
 // Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
 TimeManager* TimeManager::pInstance = nullptr;
 

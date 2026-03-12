@@ -18,6 +18,32 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Component\Collider.h" />
+    <ClInclude Include="Src\Controller\Controller.h" />
+    <ClInclude Include="Src\Definition\Colors.h" />
+    <ClInclude Include="Src\Definition\Constants.h" />
+    <ClInclude Include="Src\Definition\Definition.h" />
+    <ClInclude Include="Src\Definition\Macros.h" />
+    <ClInclude Include="Src\Definition\VectorDefines.h" />
+    <ClInclude Include="Src\GameObject\Attacker\Attacker.h" />
+    <ClInclude Include="Src\GameObject\Attacker\EAttacker.h" />
+    <ClInclude Include="Src\GameObject\GameObject.h" />
+    <ClInclude Include="Src\GameObject\Pack\Pack.h" />
+    <ClInclude Include="Src\Manager\CollisionManager.h" />
+    <ClInclude Include="Src\Manager\TimeManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\Component\Collider.cpp" />
+    <ClCompile Include="Src\Controller\Controller.cpp" />
+    <ClCompile Include="Src\GameObject\Attacker\Attacker.cpp" />
+    <ClCompile Include="Src\GameObject\Attacker\EAttacker.cpp" />
+    <ClCompile Include="Src\GameObject\GameObject.cpp" />
+    <ClCompile Include="Src\GameObject\Pack\Pack.cpp" />
+    <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Manager\CollisionManager.cpp" />
+    <ClCompile Include="Src\Manager\TimeManager.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -76,7 +102,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -94,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -112,7 +138,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -130,7 +156,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -142,28 +168,6 @@
       <AdditionalLibraryDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Component\Collider.cpp" />
-    <ClCompile Include="Controller\Controller.cpp" />
-    <ClCompile Include="GameObject\Attacker\Attacker.cpp" />
-    <ClCompile Include="GameObject\Attacker\EAttacker.cpp" />
-    <ClCompile Include="GameObject\GameObject.cpp" />
-    <ClCompile Include="GameObject\Pack\Pack.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Manager\CollisionManager.cpp" />
-    <ClCompile Include="Manager\TimeManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Component\Collider.h" />
-    <ClInclude Include="Controller\Controller.h" />
-    <ClInclude Include="Definition.h" />
-    <ClInclude Include="GameObject\Attacker\Attacker.h" />
-    <ClInclude Include="GameObject\Attacker\EAttacker.h" />
-    <ClInclude Include="GameObject\GameObject.h" />
-    <ClInclude Include="GameObject\Pack\Pack.h" />
-    <ClInclude Include="Manager\CollisionManager.h" />
-    <ClInclude Include="Manager\TimeManager.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

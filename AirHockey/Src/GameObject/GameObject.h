@@ -1,5 +1,5 @@
 #pragma once
-#include "../Definition.h"
+#include "../Definition/Definition.h"
 //#include "../Component/Collider.h"
 //	循環参照になってしまう！ -> 前方宣言で回避！
 

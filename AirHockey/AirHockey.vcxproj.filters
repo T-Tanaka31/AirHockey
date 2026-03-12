@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Component">
+      <UniqueIdentifier>{496d8f5d-ca38-491c-9d6e-d536651bd6db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controller">
+      <UniqueIdentifier>{3bad1fa0-ab83-42f9-b689-0dcb9e1f1a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{799eb68e-e3dc-47ed-b9a5-5207e0905220}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{e4b3f613-7b4c-46ca-bc54-6e064e531649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Attacker">
+      <UniqueIdentifier>{8097a32b-eb49-4dff-a646-62206ac02b6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Pack">
+      <UniqueIdentifier>{dc553377-c51c-4ad7-9430-8654e0250c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Definition">
+      <UniqueIdentifier>{c0a5bda7-17ee-451d-81f0-2ce3089dc5d6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\Component\Collider.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Controller\Controller.cpp">
+      <Filter>Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject\GameObject.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject\Attacker\Attacker.cpp">
+      <Filter>GameObject\Attacker</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject\Attacker\EAttacker.cpp">
+      <Filter>GameObject\Attacker</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject\Pack\Pack.cpp">
+      <Filter>GameObject\Pack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Manager\CollisionManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Manager\TimeManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\Component\Collider.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Controller\Controller.h">
+      <Filter>Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameObject\GameObject.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameObject\Attacker\Attacker.h">
+      <Filter>GameObject\Attacker</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameObject\Attacker\EAttacker.h">
+      <Filter>GameObject\Attacker</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameObject\Pack\Pack.h">
+      <Filter>GameObject\Pack</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Manager\CollisionManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Manager\TimeManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Definition\Macros.h">
+      <Filter>Definition</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Definition\Constants.h">
+      <Filter>Definition</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Definition\VectorDefines.h">
+      <Filter>Definition</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Definition\Colors.h">
+      <Filter>Definition</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Definition\Definition.h">
+      <Filter>Definition</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
