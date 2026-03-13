@@ -9,3 +9,7 @@
 
 #define VZero (VGet(0.0f,0.0f,0.0f))
 #define VOne  (VGet(1.0f,1.0f,1.0f))
+
+//	プレイヤーの開始位置
+#define PLAYER1_START_POS (VGet(320.0f, 240.0f, 0.0f))
+#define PLAYER2_START_POS (VGet(1600.0f, 240.0f, 0.0f))

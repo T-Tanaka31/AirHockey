@@ -30,7 +30,8 @@
     <ClInclude Include="Src\GameObject\Attacker\EAttacker.h" />
     <ClInclude Include="Src\GameObject\GameObject.h" />
     <ClInclude Include="Src\GameObject\Pack\Pack.h" />
-    <ClInclude Include="Src\Manager\CollisionManager.h" />
+    <ClInclude Include="Src\Manager\CollisionManager2D.h" />
+    <ClInclude Include="Src\Manager\InputManager.h" />
     <ClInclude Include="Src\Manager\TimeManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -41,7 +42,8 @@
     <ClCompile Include="Src\GameObject\GameObject.cpp" />
     <ClCompile Include="Src\GameObject\Pack\Pack.cpp" />
     <ClCompile Include="Src\main.cpp" />
-    <ClCompile Include="Src\Manager\CollisionManager.cpp" />
+    <ClCompile Include="Src\Manager\CollisionManager2D.cpp" />
+    <ClCompile Include="Src\Manager\InputManager.cpp" />
     <ClCompile Include="Src\Manager\TimeManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -104,12 +106,13 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../Dxlib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -122,6 +125,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -129,7 +133,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../Dxlib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -140,12 +144,13 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../Dxlib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,6 +163,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)/../Dxlib</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -165,7 +171,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>C:\Users\student2\Desktop\制作其の2\DxLib</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)/../Dxlib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

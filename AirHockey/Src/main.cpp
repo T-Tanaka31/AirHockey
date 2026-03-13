@@ -1,7 +1,6 @@
 ﻿//	============================================================
 //		ヘッダーをインクルードする場所
 //	============================================================
-#include <DxLib.h>
 #include "Definition/Definition.h"
 #include "Controller/Controller.h"
 #include "GameObject/Attacker/Attacker.h"
