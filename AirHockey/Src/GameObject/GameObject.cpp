@@ -53,8 +53,6 @@ void GameObject::Update() {
 	//	(ŒğŠ·–@‘¥‚Í¬‚è—§‚½‚È‚¢)
 	matrix = MMult(MMult(mRotXYZ, mScale), mTranslate);
 
-	
-
 }
 
 /*

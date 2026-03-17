@@ -2,36 +2,8 @@
 //		ヘッダーをインクルードする場所
 //	============================================================
 #include "Definition/Definition.h"
-#include "Controller/Controller.h"
-#include "GameObject/Attacker/Attacker.h"
-#include "GameObject/Attacker/EAttacker.h"
-#include "GameObject/Pack/Pack.h"
-
-
-//	============================================================
-//		関数を宣言、定義する場所
-//	============================================================
-
-//void MoveCharacter(int stickX, int stickY) {
-//	int move = 5;
-//
-//	// キャラクターの位置を更新する処理
-//	// ここでは仮にキャラクターの位置を (x, y) とする
-//	static int x = 320, y = 240; // 初期位置
-//	if (!(x <= 730 && x >= 70 && y <= 530 && y >= 70)) {
-//		move = 1;
-//	}
-//
-//		x += stickX * move; // X軸の移動
-//		y += stickY * move; // Y軸の移動
-//	
-//	
-//		// キャラクターの描画処理
-//		DrawCircle(x, y, 50, red, TRUE); // 赤い円でキャラクターを描画
-//	
-//}
-
-
+#include "Manager/InputManager.h"
+#include "GameObject/Mallet/Mallet.h"
 
 /*
  *	@brief		Windowプログラムのエントリーポイント
@@ -86,16 +58,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//	FPS調整用
 	int time;
 
-
-	Pack* pPack = new Pack();
-
-	Attacker* pAtt = new Attacker();
-
-
-	pPack->Start();
-	pAtt->Start();
-
 	int CourtHandle = LoadGraph("Res/court.png");
+
+	Mallet* player1 = new Mallet(PLAYER1_START_POS, 70.0f, 10.0f, 0, WINDOW_WIDTH / 2, 0, WINDOW_HEIGHT, "Player1");
+
 	//CollisionManager::GetInstance()->Register(eAtt->GetCollider());
 	//	============================================================
 	//		ゲームのメインループ
@@ -109,7 +75,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		time = GetNowCount();
 
 		//	エスケープキーでウィンドウを閉じる
-		/*if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
+	/*	if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
 			break;*/
 
 			//	============================================================
@@ -121,10 +87,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		//pAtt->CheckCircleCollision();
 
 		//pPack->CircleCollision222(pAtt);
-
-		pAtt->Update(pPack);
-		//eAtt->Update();
-		pPack->Update();
 
 		//eAtt->MoveAttacler()
 
@@ -174,19 +136,12 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 		}
 #endif
+		InputManager::GetInstance()->Update();
 
 		DrawExtendGraph(0, 0,WINDOW_WIDTH, WINDOW_HEIGHT,  CourtHandle, true);
 
-		pPack->Render();
-		pAtt->Render();
-		//eAtt->Render();
-
-	if (pPack->Getkeke() == true) {
-		CourtHandle = LoadGraph("Res/keke.jpg");
-	}
-	else if (pPack->Getchisato() == true) {
-		CourtHandle = LoadGraph("Res/chisato.jpg");
-	}
+		player1->UpdateByGamepad(0);
+		player1->Render();
 
 		// 画面の更新
 		ScreenFlip();
@@ -194,7 +149,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		if (ProcessMessage() != 0) break;
 
 		//	裏画面と表画面を切り替える
-		ScreenFlip();
+		//ScreenFlip();
 
 		//	処理が早すぎた場合に待つ
 		while (1) {
@@ -207,8 +162,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//		ゲームの解放処理
 	//	============================================================
 
-	delete pAtt;
-	delete pPack;
+	InputManager::GetInstance()->DestroyInstance();
 	//delete eAtt;
 
 	//	============================================================

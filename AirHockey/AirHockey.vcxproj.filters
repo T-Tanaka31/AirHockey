@@ -22,6 +22,15 @@
     <Filter Include="Definition">
       <UniqueIdentifier>{c0a5bda7-17ee-451d-81f0-2ce3089dc5d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{efadaeac-5e85-4e69-8e03-ebb993a6049a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Mallet">
+      <UniqueIdentifier>{2c033b2b-0c3d-4f95-98c5-788d33d8221c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Puck">
+      <UniqueIdentifier>{dd53753a-04a5-4d6f-b73b-5b59c3aeb288}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Component\Collider.cpp">
@@ -49,8 +58,17 @@
     <ClCompile Include="Src\Manager\InputManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Manager\CollisionManager2D.cpp">
+    <ClCompile Include="Src\Utility\MathUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Manager\CollisionManager.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject\Mallet\Mallet.cpp">
+      <Filter>GameObject\Mallet</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject\Puck\Puck.cpp">
+      <Filter>GameObject\Puck</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -93,8 +111,17 @@
     <ClInclude Include="Src\Manager\InputManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Manager\CollisionManager2D.h">
+    <ClInclude Include="Src\Utility\MathUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Manager\CollisionManager.h">
       <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameObject\Mallet\Mallet.h">
+      <Filter>GameObject\Mallet</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameObject\Puck\Puck.h">
+      <Filter>GameObject\Puck</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -29,10 +29,13 @@
     <ClInclude Include="Src\GameObject\Attacker\Attacker.h" />
     <ClInclude Include="Src\GameObject\Attacker\EAttacker.h" />
     <ClInclude Include="Src\GameObject\GameObject.h" />
+    <ClInclude Include="Src\GameObject\Mallet\Mallet.h" />
     <ClInclude Include="Src\GameObject\Pack\Pack.h" />
-    <ClInclude Include="Src\Manager\CollisionManager2D.h" />
+    <ClInclude Include="Src\GameObject\Puck\Puck.h" />
+    <ClInclude Include="Src\Manager\CollisionManager.h" />
     <ClInclude Include="Src\Manager\InputManager.h" />
     <ClInclude Include="Src\Manager\TimeManager.h" />
+    <ClInclude Include="Src\Utility\MathUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Component\Collider.cpp" />
@@ -40,11 +43,14 @@
     <ClCompile Include="Src\GameObject\Attacker\Attacker.cpp" />
     <ClCompile Include="Src\GameObject\Attacker\EAttacker.cpp" />
     <ClCompile Include="Src\GameObject\GameObject.cpp" />
+    <ClCompile Include="Src\GameObject\Mallet\Mallet.cpp" />
     <ClCompile Include="Src\GameObject\Pack\Pack.cpp" />
+    <ClCompile Include="Src\GameObject\Puck\Puck.cpp" />
     <ClCompile Include="Src\main.cpp" />
-    <ClCompile Include="Src\Manager\CollisionManager2D.cpp" />
+    <ClCompile Include="Src\Manager\CollisionManager.cpp" />
     <ClCompile Include="Src\Manager\InputManager.cpp" />
     <ClCompile Include="Src\Manager\TimeManager.cpp" />
+    <ClCompile Include="Src\Utility\MathUtility.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

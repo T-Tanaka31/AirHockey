@@ -23,12 +23,9 @@ void TimeManager::DestroyInstance() {
 }
 
 TimeManager::TimeManager() 
-	/*:prev()
+	:prev()
 	,current()
-	,m()
-	,s()
-	,ms()
-	,deltaTime()*/
+	,deltaTime()
 {}
 
 void TimeManager::Start() {

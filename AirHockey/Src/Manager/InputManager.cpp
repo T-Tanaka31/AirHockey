@@ -1,4 +1,24 @@
 #include "InputManager.h"
+// 静的メンバ変数の初期化
+InputManager* InputManager::pInstance = nullptr;
+
+void InputManager::CreateInstance() {
+	pInstance = new InputManager();
+}
+
+InputManager* InputManager::GetInstance() {
+	if (pInstance == nullptr)
+		CreateInstance();
+
+	return pInstance;
+}
+
+void InputManager::DestroyInstance() {
+	if (pInstance != nullptr) {
+		delete pInstance;
+		pInstance = nullptr;
+	}
+}
 
 InputManager::InputManager()
 	: rangeOfMotion() {
@@ -8,43 +28,34 @@ void InputManager::Update() {
 	for (int i = 0; i < 2; i++) {
 		prevPadState[i] = padState[i];
 
-		DWORD result = XInputGetState(i, &padState[i]);
+		int result = GetJoypadXInputState(i, &padState[i]);
 
-		if (result != ERROR_SUCCESS)
+		if (result != 0)
 			padState[i] = {};
 	}
 }
 
-inline float InputManager::IsJoypadSthick(int _padID, std::string _SthickName) {
+float InputManager::IsJoypadSthick(int _padID, std::string _SthickName) {
 	//	入力値
 	float tmp = 0.0f;
+
 	if (_SthickName == "L_Vertical") {
-		if (padState[_padID].Gamepad.sThumbLY > rangeOfMotion) {
-			padState[_padID].Gamepad.sThumbLY = rangeOfMotion;
-		}
-		tmp += padState[_padID].Gamepad.sThumbLY / rangeOfMotion;
+		tmp = padState[_padID].ThumbLY / rangeOfMotion;
 	}
 	else if (_SthickName == "L_Horizontal") {
-		if (padState[_padID].Gamepad.sThumbLX > rangeOfMotion) {
-			padState[_padID].Gamepad.sThumbLX = rangeOfMotion;
-		}
-		tmp += padState[_padID].Gamepad.sThumbLX / rangeOfMotion;
+		tmp = padState[_padID].ThumbLX / rangeOfMotion;
 	}
 	else if (_SthickName == "R_Vertical") {
-		if (padState[_padID].Gamepad.sThumbRY > rangeOfMotion) {
-			padState[_padID].Gamepad.sThumbRY = rangeOfMotion;
-		}
-		tmp += padState[_padID].Gamepad.sThumbRY / rangeOfMotion;
+		tmp = padState[_padID].ThumbRY / rangeOfMotion;
 	}
 	else if (_SthickName == "R_Horizontal") {
-		if (padState[_padID].Gamepad.sThumbRX > rangeOfMotion) {
-			padState[_padID].Gamepad.sThumbRX = rangeOfMotion;
-		}
-		tmp += padState[_padID].Gamepad.sThumbRX / rangeOfMotion;
+		tmp = padState[_padID].ThumbRX / rangeOfMotion;
 	}
 
-	if (abs(tmp) <= 0.05f)
+	// デッドゾーン
+	if (fabs(tmp) <= 0.05f)
 		tmp = 0.0f;
 
 	return tmp;
+
 }
