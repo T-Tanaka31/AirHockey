@@ -3,7 +3,10 @@
 //	============================================================
 #include "Definition/Definition.h"
 #include "Manager/InputManager.h"
+#include "Manager/CollisionManager.h"
 #include "GameObject/Mallet/Mallet.h"
+#include "GameObject/Puck/Puck.h"
+#include "Component/Goal.h"
 
 /*
  *	@brief		Windowプログラムのエントリーポイント
@@ -14,7 +17,7 @@
  *	@return		int
  *	@tips		WINAPI
  */
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow) {
 	//	============================================================
 	//		DxLibの初期化処理	理解するまで触らない
 	//	============================================================
@@ -48,8 +51,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		SetLightEnable(TRUE);
 		//	グローバル環境光の設定
 		SetGlobalAmbientLight(GetColorF(1.0f, 1.0f, 1.0f, 1.0f));	//	ライトの計算で α値は使わない
-
-
 	}
 
 	//	============================================================
@@ -60,7 +61,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	int CourtHandle = LoadGraph("Res/court.png");
 
-	Mallet* player1 = new Mallet(PLAYER1_START_POS, 70.0f, 10.0f, 0, WINDOW_WIDTH / 2, 0, WINDOW_HEIGHT, "Player1");
+	Mallet* player1 = new Mallet(PLAYER1_START_POS, MALLET_RADIUS, MALLET_SPEED, P1_MIN_X, P1_MAX_X, P1_MIN_Y, P1_MAX_Y, "Player1");
+	Mallet* player2 = new Mallet(PLAYER2_START_POS, MALLET_RADIUS, MALLET_SPEED, P2_MIN_X, P2_MAX_X, P2_MIN_Y, P2_MAX_Y,"Player2");
+
+	Goal leftGoal(0, GOAL_TOP, GOAL_WIDTH, GOAL_BOTTOM);
+	Goal rightGoal(WINDOW_WIDTH - GOAL_WIDTH, GOAL_TOP, WINDOW_WIDTH, GOAL_BOTTOM);
+
+	Puck* puck = new Puck(PUCK_START_POS, PUCK_RADIUS, PUCK_FRICTION, "Puck");
+
+	player1->SetPuck(puck);
+	player2->SetPuck(puck);
+
 
 	//CollisionManager::GetInstance()->Register(eAtt->GetCollider());
 	//	============================================================
@@ -84,64 +95,40 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 			 // 描画先画面を裏画面にする
 		SetDrawScreen(DX_SCREEN_BACK);
 
-		//pAtt->CheckCircleCollision();
+		player1->UpdateByGamepad(0);
+		player2->UpdateByGamepad(1);
+		
+		player1->Update();
+		player2->Update();
+		puck->Update();
 
-		//pPack->CircleCollision222(pAtt);
+		// 左ゴール
+		if (puck->GetPosition().x + puck->GetRadius() < leftGoal.x2) {
+			puck->ResetPuck();
+		}
 
-		//eAtt->MoveAttacler()
+		// 右ゴール
+		if (puck->GetPosition().x - puck->GetRadius() > WINDOW_WIDTH) {
+			puck->ResetPuck();
+		}
 
 
+		InputManager::GetInstance()->Update();
 		//	画面をクリアする
 		ClearDrawScreen();
 
 		//	============================================================
 		//		ゲームの描画処理	処理順に注意
 		//	============================================================
-
-#if _DEBUG
-		//	キャラクターの位置関係がわかるように地面にラインを描画する
-		{
-			float x1 = 0;
-			float x2 = 0;
-			float Xver2 = 1900;
-			float y1 = 0;
-			float y2 = 1080;
-			float Yver2 = 0;
-
-			for (int i = 0; i < 500; i++) {
-				DrawLine(x1, y1, x2, y2, COLOR_GREEN);    // 線を描画
-				x1 += 10;
-				x2 += 10;
-			}
-
-			for (int i = 0; i < 500; i++) {
-				DrawLine(0, y1, Xver2, Yver2, COLOR_GREEN);
-				y1 += 10;
-				Yver2 += 10;
-			}
-
-			DrawLine(WINDOW_WIDTH / 2, 0, WINDOW_WIDTH / 2, WINDOW_HEIGHT - 400, COLOR_BLUE);
-
-			DrawLine(WINDOW_WIDTH / 2, 400, WINDOW_WIDTH / 2, WINDOW_HEIGHT, COLOR_BLUE);
-
-			DrawCircle(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 100, COLOR_BLUE, FALSE);
-
-			DrawLine(40, 200, 40, 400, COLOR_YELLOW);
-			DrawLine(0, (WINDOW_HEIGHT * 2) / 3, 40, (WINDOW_HEIGHT * 2) / 3, COLOR_YELLOW);
-			DrawLine(0, 400, 40, 400, COLOR_YELLOW);
-
-			DrawLine(1160, 200, 1160, 400, COLOR_YELLOW);
-			DrawLine(1200, 200, 1160, 200, COLOR_YELLOW);
-			DrawLine(1200, 400, 1160, 400, COLOR_YELLOW);
-
-		}
-#endif
-		InputManager::GetInstance()->Update();
-
 		DrawExtendGraph(0, 0,WINDOW_WIDTH, WINDOW_HEIGHT,  CourtHandle, true);
 
-		player1->UpdateByGamepad(0);
 		player1->Render();
+		player2->Render();
+		puck->Render();
+
+		DrawBox(0, GOAL_TOP, -GOAL_WIDTH, GOAL_BOTTOM, COLOR_BLACK, FALSE);
+		DrawBox(WINDOW_WIDTH, GOAL_TOP, WINDOW_WIDTH + GOAL_WIDTH, GOAL_BOTTOM, COLOR_BLACK, FALSE);
+
 
 		// 画面の更新
 		ScreenFlip();
@@ -162,13 +149,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	//		ゲームの解放処理
 	//	============================================================
 
-	InputManager::GetInstance()->DestroyInstance();
-	//delete eAtt;
+	delete player1;
+	delete player2;
+	delete puck;
+
+	InputManager::DestroyInstance();
+	CollisionManager::DestroyInstance();
+
+
 
 	//	============================================================
 	//		DxLibの解放処理
 	//	============================================================
 	//	DxLibの終了
+
 	DxLib_End();
 
 	return 0;

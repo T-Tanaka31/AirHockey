@@ -45,6 +45,10 @@ public:	// 静的メンバ関数
 	 */
 	static void DestroyInstance();
 
+private:
+	
+public:
+
 	//	円の衝突判定
 	bool CheckCircleCollision (float x1, float y1, float r1, float x2, float y2, float r2) const;
 
@@ -61,5 +65,11 @@ public:	// 静的メンバ関数
 		float radius,
 		float minX, float maxX,
 		float minY, float maxY);
+
+	void CheckMalletPuckCollision(float mx, float my, float mr,      // マレット
+		float& px, float& py, float pr,    // パック
+		float mvx, float mvy,              // マレットの速度
+		float& pvx, float& pvy             // パックの速度
+	);
 };
 

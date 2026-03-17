@@ -21,18 +21,22 @@ void InputManager::DestroyInstance() {
 }
 
 InputManager::InputManager()
-	: rangeOfMotion() {
+	: rangeOfMotion(32767.0f) {
 }
 
 void InputManager::Update() {
+	const int padTypes[2] = { DX_INPUT_PAD1, DX_INPUT_PAD2 };
+
 	for (int i = 0; i < 2; i++) {
 		prevPadState[i] = padState[i];
 
-		int result = GetJoypadXInputState(i, &padState[i]);
+		int result = GetJoypadXInputState(padTypes[i], &padState[i]);
 
-		if (result != 0)
+		if (result != 0) {
 			padState[i] = {};
+		}
 	}
+
 }
 
 float InputManager::IsJoypadSthick(int _padID, std::string _SthickName) {

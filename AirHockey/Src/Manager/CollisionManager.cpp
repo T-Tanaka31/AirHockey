@@ -1,5 +1,6 @@
 #include "CollisionManager.h"
 #include "../Utility/MathUtility.h"
+#include "../Definition/Definition.h"
 // Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
 CollisionManager* CollisionManager::pInstance = nullptr;
 
@@ -41,12 +42,10 @@ void CollisionManager::ResolveCircleCollision(float& x1, float& y1, float r1, fl
 	if (overlap <= 0.0f) return;
 
 	MathUtility::Normalize(dx, dy);
+	x2 += dx * overlap;
+	y2 += dy * overlap;
 
-	x1 -= dx * overlap * 0.5f;
-	y1 -= dy * overlap * 0.5f;
 
-	x2 += dx * overlap * 0.5f;
-	y2 += dy * overlap * 0.5f;
 }
 
 void CollisionManager::ReflectVelocity(float& vx, float& vy, float nx, float ny) {
@@ -54,15 +53,26 @@ void CollisionManager::ReflectVelocity(float& vx, float& vy, float nx, float ny)
 }
 
 void CollisionManager::CheckAndReflectWall(float& px, float& py, float& vx, float& vy, float radius, float minX, float maxX, float minY, float maxY) {
+	const float goalMinY = GOAL_TOP;
+	const float goalMaxY = GOAL_BOTTOM;
+
+	bool inGoalY = (py > goalMinY && py < goalMaxY);
+
 	// ¶‰E
-	if (px - radius < minX) {
-		px = minX + radius;
-		vx = -vx;
+	if (!inGoalY) {
+		if (px - radius < minX) {
+			px = minX + radius;
+			vx = -vx;
+		}
 	}
-	else if (px + radius > maxX) {
-		px = maxX - radius;
-		vx = -vx;
+
+	if (!inGoalY) {
+		if (px + radius > maxX) {
+			px = maxX - radius;
+			vx = -vx;
+		}
 	}
+
 
 	// ã‰º
 	if (py - radius < minY) {
@@ -75,3 +85,21 @@ void CollisionManager::CheckAndReflectWall(float& px, float& py, float& vx, floa
 	}
 }
 
+void CollisionManager::CheckMalletPuckCollision(
+	float mx, float my, float mr,
+	float& px, float& py, float pr,
+	float mvx, float mvy,
+	float& pvx, float& pvy
+) {
+	float nx = px - mx;
+	float ny = py - my;
+	MathUtility::Normalize(nx, ny);
+
+	MathUtility::Reflect(pvx, pvy, nx, ny, pvx, pvy);
+
+	pvx += mvx * 0.6f;
+	pvy += mvy * 0.6f;
+
+	pvx *= 1.25f;
+	pvy *= 1.25f;
+}

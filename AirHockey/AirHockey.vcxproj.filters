@@ -70,6 +70,9 @@
     <ClCompile Include="Src\GameObject\Puck\Puck.cpp">
       <Filter>GameObject\Puck</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Component\Goal.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Component\Collider.h">
@@ -122,6 +125,12 @@
     </ClInclude>
     <ClInclude Include="Src\GameObject\Puck\Puck.h">
       <Filter>GameObject\Puck</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Component\Goal.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Definition\GameDefine.h">
+      <Filter>Definition</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

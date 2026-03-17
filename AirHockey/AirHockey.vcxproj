@@ -20,10 +20,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Component\Collider.h" />
+    <ClInclude Include="Src\Component\Goal.h" />
     <ClInclude Include="Src\Controller\Controller.h" />
     <ClInclude Include="Src\Definition\Colors.h" />
     <ClInclude Include="Src\Definition\Constants.h" />
     <ClInclude Include="Src\Definition\Definition.h" />
+    <ClInclude Include="Src\Definition\GameDefine.h" />
     <ClInclude Include="Src\Definition\Macros.h" />
     <ClInclude Include="Src\Definition\VectorDefines.h" />
     <ClInclude Include="Src\GameObject\Attacker\Attacker.h" />
@@ -39,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Component\Collider.cpp" />
+    <ClCompile Include="Src\Component\Goal.cpp" />
     <ClCompile Include="Src\Controller\Controller.cpp" />
     <ClCompile Include="Src\GameObject\Attacker\Attacker.cpp" />
     <ClCompile Include="Src\GameObject\Attacker\EAttacker.cpp" />

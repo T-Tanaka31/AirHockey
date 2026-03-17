@@ -20,7 +20,7 @@ float MathUtility::ShortestAngle(float from, float to) {
 float MathUtility::Distance(float x1, float y1, float x2, float y2) {
 	float dx = x2 - x1;
 	float dy = y2 - y1;
-	return sqrt(dx * dx + dy + dy);
+	return sqrt(dx * dx + dy * dy);
 }
 
 //	ベクトルの長さ
@@ -60,7 +60,7 @@ float MathUtility::Clamp(float value, float min, float max) {
 
 // 線形補間（0〜1）
 float MathUtility::Lerp(float a, float b, float t) {
-	return a + (b - a) + t;
+	return a + (b - a) * t;
 }
 
 float MathUtility::Repeat(float t, float length) {

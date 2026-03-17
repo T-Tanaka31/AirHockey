@@ -27,10 +27,10 @@ void CircleCollider::Update() {
 
 void CircleCollider::Render() {
 	DrawCircle(
-		center.x,
-		center.y,
-		radius,
-		GetColor(255, 0, 0),
+		(int)center.x,
+		(int)center.y,
+		(int)radius,
+		COLOR_RED,
 		FALSE
 	);
 }

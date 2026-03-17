@@ -5,9 +5,9 @@ private:
 	float radius;
 	VECTOR velocity;
 	float friction;
-
+	VECTOR startPos;
 public:
-	Puck(VECTOR _startPos, float _r, float _friction = 0.98f, std::string _tag = "Puck");
+	Puck(VECTOR _startPos, float _r, float _friction = PUCK_FRICTION, std::string _tag = "Puck");
 
 	void Start() override;
 	void Update() override;
@@ -21,6 +21,11 @@ public:
 	inline float GetRadius() const { return radius; }
 
 	inline VECTOR GetVelocity() const { return velocity; }
+
+	inline VECTOR& GetVelocityRef() { return velocity; }
+	inline VECTOR& GetPositionRef() { return position; }
+
+	void ResetPuck();
 
 };
 

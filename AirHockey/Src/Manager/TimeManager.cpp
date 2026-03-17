@@ -30,13 +30,13 @@ TimeManager::TimeManager()
 
 void TimeManager::Start() {
 	// 起動時の時間を取得
-	prev = GetNowCount();
+	prev = (float)GetNowCount();
 	current = prev;
 }
 
 void TimeManager::Update() {
 	// 今の時間を取得
-	current = GetNowCount();
+	current = (float)GetNowCount();
 	// 前回のフレームとの差を計算
 	deltaTime = current - prev;
 	// 経過時間の加算

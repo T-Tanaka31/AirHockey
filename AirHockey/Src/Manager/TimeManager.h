@@ -46,9 +46,9 @@ public:	// Ã“Iƒƒ“ƒoŠÖ”
 #pragma endregion
 
 private:
-	int prev;
-	int current;
-	int m = 0, s = 0, ms = 0;
+	float prev;
+	float current;
+	float m = 0.0f, s = 0.0f, ms = 0.0f;
 
 public:
 	float deltaTime;
