@@ -7,7 +7,7 @@ private:
 	float friction;
 	VECTOR startPos;
 public:
-	Puck(VECTOR _startPos, float _r, float _friction = PUCK_FRICTION, std::string _tag = "Puck");
+	Puck(VECTOR _startPos, float _r, float _friction = GameConfig::Puck::Friction, std::string _tag = "Puck");
 
 	void Start() override;
 	void Update() override;

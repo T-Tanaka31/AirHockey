@@ -61,13 +61,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	int CourtHandle = LoadGraph("Res/court.png");
 
-	Mallet* player1 = new Mallet(PLAYER1_START_POS, MALLET_RADIUS, MALLET_SPEED, P1_MIN_X, P1_MAX_X, P1_MIN_Y, P1_MAX_Y, "Player1");
-	Mallet* player2 = new Mallet(PLAYER2_START_POS, MALLET_RADIUS, MALLET_SPEED, P2_MIN_X, P2_MAX_X, P2_MIN_Y, P2_MAX_Y,"Player2");
+	namespace GC = GameConfig;
 
-	Goal leftGoal(0, GOAL_TOP, GOAL_WIDTH, GOAL_BOTTOM);
-	Goal rightGoal(WINDOW_WIDTH - GOAL_WIDTH, GOAL_TOP, WINDOW_WIDTH, GOAL_BOTTOM);
+	Mallet* player1 = new Mallet(GC::Mallet::Player1StartPos, GC::Mallet::Radius, GC::Mallet::Speed, GC::Mallet::P1Limit.minX, GC::Mallet::P1Limit.maxX, GC::Mallet::P1Limit.minY, GC::Mallet::P1Limit.maxY, "Player1");
+	Mallet* player2 = new Mallet(GC::Mallet::Player2StartPos, GC::Mallet::Radius, GC::Mallet::Speed, GC::Mallet::P2Limit.minX, GC::Mallet::P2Limit.maxX, GC::Mallet::P2Limit.minY, GC::Mallet::P2Limit.maxY, "Player3");
 
-	Puck* puck = new Puck(PUCK_START_POS, PUCK_RADIUS, PUCK_FRICTION, "Puck");
+	Goal leftGoal(0, GC::Goal::Top, GC::Goal::Width, GC::Goal::Bottom);
+	Goal rightGoal(WINDOW_WIDTH - GC::Goal::Width, GC::Goal::Top, WINDOW_WIDTH, GC::Goal::Bottom);
+
+	Puck* puck = new Puck(GC::Puck::StartPos, GC::Puck::Radius, GC::Puck::Friction, "Puck");
 
 	player1->SetPuck(puck);
 	player2->SetPuck(puck);
@@ -97,7 +99,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 		player1->UpdateByGamepad(0);
 		player2->UpdateByGamepad(1);
-		
+
 		player1->Update();
 		player2->Update();
 		puck->Update();
@@ -120,14 +122,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//	============================================================
 		//		ゲームの描画処理	処理順に注意
 		//	============================================================
-		DrawExtendGraph(0, 0,WINDOW_WIDTH, WINDOW_HEIGHT,  CourtHandle, true);
+		DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, CourtHandle, true);
 
 		player1->Render();
 		player2->Render();
 		puck->Render();
 
-		DrawBox(0, GOAL_TOP, -GOAL_WIDTH, GOAL_BOTTOM, COLOR_BLACK, FALSE);
-		DrawBox(WINDOW_WIDTH, GOAL_TOP, WINDOW_WIDTH + GOAL_WIDTH, GOAL_BOTTOM, COLOR_BLACK, FALSE);
+		DrawBox(0, GC::Goal::Top, -GC::Goal::Width, GC::Goal::Bottom, COLOR_BLACK, FALSE);
+		DrawBox(WINDOW_WIDTH, GC::Goal::Top, WINDOW_WIDTH + GC::Goal::Width, GC::Goal::Bottom, COLOR_BLACK, FALSE);
 
 
 		// 画面の更新

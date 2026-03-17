@@ -1,46 +1,33 @@
 #pragma once
-//==============================
-// パック関連
-//==============================
-//	パックの半径
-#define PUCK_RADIUS (50.0f)
-//	パックの開始位置
-#define PUCK_START_POS (VGet(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 0))
-//	パックの摩擦
-#define PUCK_FRICTION (0.995f)
-//	パックの最大速度
-#define PUCK_MAX_SPEED (50.0f)
+#include <DxLib.h>
 
-//==============================
-// マレット関連
-//==============================
-//	マレットの半径
-#define MALLET_RADIUS (70.0f)
-//	マレットの速度
-#define MALLET_SPEED (25.0f)
-//	マレットの開始位置
-#define PLAYER1_START_POS (VGet(320.0f, 240.0f, 0.0f))
-#define PLAYER2_START_POS (VGet(1600.0f, 240.0f, 0.0f))
+namespace GameConfig {
+	namespace Puck {
+		static constexpr float Radius = 50.0f;
+		static constexpr float Friction = 0.995f;
+		static constexpr float MaxSpeed = 50.0f;
 
-//==============================
-// マレット移動制限
-//==============================
-#define P1_MIN_X (0)
-#define P1_MAX_X (WINDOW_WIDTH / 2)
-#define P1_MIN_Y (0)
-#define P1_MAX_Y (WINDOW_HEIGHT)
+		const VECTOR StartPos = VGet(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 0);
+	}
 
-#define P2_MIN_X (WINDOW_WIDTH / 2)
-#define P2_MAX_X (WINDOW_WIDTH)
-#define P2_MIN_Y (0)
-#define P2_MAX_Y (WINDOW_HEIGHT)
+	namespace Mallet {
+		static constexpr float Radius = 70.0f;
+		static constexpr float Speed = 25.0f;
 
-//==============================
-// ゴール関連
-//==============================
-//	ゴール判定
-#define GOAL_TOP (380)
-#define GOAL_BOTTOM (780)
-#define GOAL_WIDTH (-80)
+		const VECTOR Player1StartPos = VGet(320.0f, 240.0f, 0.0f);
+		const VECTOR Player2StartPos = VGet(1600.0f, 240.0f, 0.0f);
 
+		struct Area {
+			float minX, maxX, minY, maxY;
+		};
 
+		static const Area P1Limit = { 0, WINDOW_WIDTH / 2, 0, WINDOW_HEIGHT };
+		static constexpr Area P2Limit = { WINDOW_WIDTH / 2, WINDOW_WIDTH, 0, WINDOW_HEIGHT };
+	}
+
+	namespace Goal {
+		static constexpr int Top = 310;
+		static constexpr int Bottom = 775;
+		static constexpr int Width = -80;
+	}
+}

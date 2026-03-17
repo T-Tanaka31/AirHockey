@@ -31,7 +31,7 @@ void Puck::Update() {
         0.0f, WINDOW_HEIGHT
     );
 
-    float maxSpeed = PUCK_MAX_SPEED;
+    float maxSpeed = GameConfig::Puck::MaxSpeed;
     float speed = MathUtility::Length(velocity.x, velocity.y);
 
     if (speed > maxSpeed) {

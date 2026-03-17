@@ -53,8 +53,8 @@ void CollisionManager::ReflectVelocity(float& vx, float& vy, float nx, float ny)
 }
 
 void CollisionManager::CheckAndReflectWall(float& px, float& py, float& vx, float& vy, float radius, float minX, float maxX, float minY, float maxY) {
-	const float goalMinY = GOAL_TOP;
-	const float goalMaxY = GOAL_BOTTOM;
+	const float goalMinY = GameConfig::Goal::Top;
+	const float goalMaxY = GameConfig::Goal::Bottom;
 
 	bool inGoalY = (py > goalMinY && py < goalMaxY);
 
