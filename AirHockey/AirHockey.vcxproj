@@ -30,21 +30,23 @@
     <ClInclude Include="Src\GameObject\GameObject.h" />
     <ClInclude Include="Src\GameObject\Mallet\Mallet.h" />
     <ClInclude Include="Src\GameObject\Puck\Puck.h" />
-    <ClInclude Include="Src\Manager\CollisionManager.h" />
+    <ClInclude Include="Src\GameSystem\Score.h" />
     <ClInclude Include="Src\Manager\InputManager.h" />
+    <ClInclude Include="Src\Manager\ScoreManager.h" />
     <ClInclude Include="Src\Manager\TimeManager.h" />
+    <ClInclude Include="Src\Utility\CollisionUtility.h" />
     <ClInclude Include="Src\Utility\MathUtility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Component\Collider.cpp" />
-    <ClCompile Include="Src\Component\Goal.cpp" />
     <ClCompile Include="Src\GameObject\GameObject.cpp" />
     <ClCompile Include="Src\GameObject\Mallet\Mallet.cpp" />
     <ClCompile Include="Src\GameObject\Puck\Puck.cpp" />
     <ClCompile Include="Src\main.cpp" />
-    <ClCompile Include="Src\Manager\CollisionManager.cpp" />
     <ClCompile Include="Src\Manager\InputManager.cpp" />
+    <ClCompile Include="Src\Manager\ScoreManager.cpp" />
     <ClCompile Include="Src\Manager\TimeManager.cpp" />
+    <ClCompile Include="Src\Utility\CollisionUtility.cpp" />
     <ClCompile Include="Src\Utility\MathUtility.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

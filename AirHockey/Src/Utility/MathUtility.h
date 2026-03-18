@@ -33,6 +33,7 @@ public:
 	// 線形補間（0〜1）
 	static float Lerp(float a, float b, float t);
 
+	//	値 t は length より大きくはならず 0 より小さくはならず、その間をループ
 	static float Repeat(float t, float length);
 
 };

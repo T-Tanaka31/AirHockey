@@ -37,8 +37,8 @@ void CircleCollider::Render() {
 
 BoxCollider::BoxCollider(GameObject* _pObj, VECTOR _min, VECTOR _max)
 	: Collider(_pObj)
-	, minPoint(_min) 
-	, maxPoint(_max){
+	, minPoint(_min)
+	, maxPoint(_max) {
 }
 
 void BoxCollider::Update() {

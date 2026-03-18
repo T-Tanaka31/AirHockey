@@ -3,10 +3,10 @@
 //	============================================================
 #include "Definition/Definition.h"
 #include "Manager/InputManager.h"
-#include "Manager/CollisionManager.h"
+#include "Manager/ScoreManager.h"
 #include "GameObject/Mallet/Mallet.h"
 #include "GameObject/Puck/Puck.h"
-#include "Component/Goal.h"
+#include "GameSystem/Goal.h"
 
 /*
  *	@brief		Windowプログラムのエントリーポイント
@@ -66,16 +66,14 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	Mallet* player1 = new Mallet(GC::Mallet::Player1StartPos, GC::Mallet::Radius, GC::Mallet::Speed, GC::Mallet::P1Limit.minX, GC::Mallet::P1Limit.maxX, GC::Mallet::P1Limit.minY, GC::Mallet::P1Limit.maxY, "Player1");
 	Mallet* player2 = new Mallet(GC::Mallet::Player2StartPos, GC::Mallet::Radius, GC::Mallet::Speed, GC::Mallet::P2Limit.minX, GC::Mallet::P2Limit.maxX, GC::Mallet::P2Limit.minY, GC::Mallet::P2Limit.maxY, "Player3");
 
-	Goal leftGoal(0, GC::Goal::Top, GC::Goal::Width, GC::Goal::Bottom);
-	Goal rightGoal(WINDOW_WIDTH - GC::Goal::Width, GC::Goal::Top, WINDOW_WIDTH, GC::Goal::Bottom);
-
 	Puck* puck = new Puck(GC::Puck::StartPos, GC::Puck::Radius, GC::Puck::Friction, "Puck");
+
+	ScoreManager::GetInstance()->SetPuck(puck);
+	ScoreManager::GetInstance()->SetMallet(player1, player2);
 
 	player1->SetPuck(puck);
 	player2->SetPuck(puck);
 
-
-	//CollisionManager::GetInstance()->Register(eAtt->GetCollider());
 	//	============================================================
 	//		ゲームのメインループ
 	//	============================================================
@@ -87,14 +85,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//	FPSの調整
 		time = GetNowCount();
 
-		//	エスケープキーでウィンドウを閉じる
-	/*	if (InputManager::GetInstance()->IsKeyDown(KEY_INPUT_ESCAPE))
-			break;*/
-
-			//	============================================================
-			//		ゲームの更新処理
-			//	============================================================
-			 // 描画先画面を裏画面にする
+		//	============================================================
+		//		ゲームの更新処理
+		//	============================================================
+		// 描画先画面を裏画面にする
 		SetDrawScreen(DX_SCREEN_BACK);
 
 		player1->UpdateByGamepad(0);
@@ -104,18 +98,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		player2->Update();
 		puck->Update();
 
-		// 左ゴール
-		if (puck->GetPosition().x + puck->GetRadius() < leftGoal.x2) {
-			puck->ResetPuck();
-		}
-
-		// 右ゴール
-		if (puck->GetPosition().x - puck->GetRadius() > WINDOW_WIDTH) {
-			puck->ResetPuck();
-		}
-
-
 		InputManager::GetInstance()->Update();
+		ScoreManager::GetInstance()->Update();
 		//	画面をクリアする
 		ClearDrawScreen();
 
@@ -124,9 +108,11 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//	============================================================
 		DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, CourtHandle, true);
 
+		puck->Render();
 		player1->Render();
 		player2->Render();
-		puck->Render();
+
+		ScoreManager::GetInstance()->Draw();
 
 		DrawBox(0, GC::Goal::Top, -GC::Goal::Width, GC::Goal::Bottom, COLOR_BLACK, FALSE);
 		DrawBox(WINDOW_WIDTH, GC::Goal::Top, WINDOW_WIDTH + GC::Goal::Width, GC::Goal::Bottom, COLOR_BLACK, FALSE);
@@ -156,10 +142,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	delete puck;
 
 	InputManager::DestroyInstance();
-	CollisionManager::DestroyInstance();
-
-
-
+	ScoreManager::DestroyInstance();
 	//	============================================================
 	//		DxLibの解放処理
 	//	============================================================

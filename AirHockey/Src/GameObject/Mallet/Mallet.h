@@ -33,5 +33,7 @@ public:
 	inline float GetRadius() const { return radius; }
 
 	void SetPuck(Puck* p) { puck = p; }
+	
+	void SetPosition(VECTOR _pos) { position = _pos; }
 };
 

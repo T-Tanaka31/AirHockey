@@ -1,6 +1,6 @@
 #include "Mallet.h"
 #include "../../Utility/MathUtility.h"
-#include "../../Manager/CollisionManager.h"
+#include "../../Utility/CollisionUtility.h"
 
 Mallet::Mallet(VECTOR startPos, float r, float speed, float _minX, float _maxX, float _minY, float _maxY, std::string _tag)
 	: GameObject(startPos, _tag)
@@ -11,40 +11,37 @@ Mallet::Mallet(VECTOR startPos, float r, float speed, float _minX, float _maxX, 
 	, minY(_minY)
 	, maxY(_maxY)
 	, velocity(VZero)
-	, puck(NULL){
+	, puck(NULL) {
 }
 
 void Mallet::Start() {
 }
 
 void Mallet::Update() {
-    if (!puck) return;
+	if (!puck) return;
 
-    // Õ“Ë‚µ‚Ä‚¢‚é‚©
-    bool nowColliding = CollisionManager::GetInstance()->CheckCircleCollision(
-        position.x, position.y, radius,
-        puck->GetPositionRef().x, puck->GetPositionRef().y, puck->GetRadius()
-    );
+	// Õ“Ë‚µ‚Ä‚¢‚é‚©
+	bool nowColliding = CollisionUtility::CheckCircleCollision(
+		position.x, position.y, radius,
+		puck->GetPositionRef().x, puck->GetPositionRef().y, puck->GetRadius()
+	);
 
-    if (nowColliding) {
-        CollisionManager::GetInstance()->ResolveCircleCollision(
-            position.x, position.y, radius,
-            puck->GetPositionRef().x, puck->GetPositionRef().y, puck->GetRadius()
-        );
-    }
+	if (nowColliding) {
+		CollisionUtility::ResolveCircleCollision(
+			position.x, position.y, radius,
+			puck->GetPositionRef().x, puck->GetPositionRef().y, puck->GetRadius()
+		);
+	}
 
-    if (nowColliding && !isCollidingWithPuck) {
-        CollisionManager::GetInstance()->CheckMalletPuckCollision(
-            position.x, position.y, radius,
-            puck->GetPositionRef().x, puck->GetPositionRef().y, puck->GetRadius(),
-            velocity.x, velocity.y,
-            puck->GetVelocityRef().x, puck->GetVelocityRef().y
-        );
-    }
-
-    isCollidingWithPuck = nowColliding;
-
-
+	if (nowColliding && !isCollidingWithPuck) {
+		CollisionUtility::CheckMalletPuckCollision(
+			position.x, position.y, radius,
+			puck->GetPositionRef().x, puck->GetPositionRef().y, puck->GetRadius(),
+			velocity.x, velocity.y,
+			puck->GetVelocityRef().x, puck->GetVelocityRef().y
+		);
+	}
+	isCollidingWithPuck = nowColliding;
 }
 
 void Mallet::Render() {

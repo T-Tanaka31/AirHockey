@@ -14,7 +14,7 @@ namespace GameConfig {
 		static constexpr float Radius = 70.0f;
 		static constexpr float Speed = 25.0f;
 
-		const VECTOR Player1StartPos = VGet(320.0f, 240.0f, 0.0f);
+		const VECTOR Player1StartPos = VGet(320.0f, 840.0f, 0.0f);
 		const VECTOR Player2StartPos = VGet(1600.0f, 240.0f, 0.0f);
 
 		struct Area {

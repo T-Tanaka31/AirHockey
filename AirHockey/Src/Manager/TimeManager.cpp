@@ -22,11 +22,11 @@ void TimeManager::DestroyInstance() {
 	}
 }
 
-TimeManager::TimeManager() 
-	:prev()
-	,current()
-	,deltaTime()
-{}
+TimeManager::TimeManager()
+	: prev()
+	, current()
+	, deltaTime() {
+}
 
 void TimeManager::Start() {
 	// ‹N“®‚ÌŠÔ‚ğæ“¾

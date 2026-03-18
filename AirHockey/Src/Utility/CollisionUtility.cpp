@@ -1,37 +1,13 @@
-#include "CollisionManager.h"
-#include "../Utility/MathUtility.h"
+#include "CollisionUtility.h"
+#include "MathUtility.h"
 #include "../Definition/Definition.h"
-// Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
-CollisionManager* CollisionManager::pInstance = nullptr;
 
-void CollisionManager::CreateInstance() {
-	pInstance = new CollisionManager();
-}
-
-CollisionManager* CollisionManager::GetInstance() {
-	if (pInstance == nullptr)
-		CreateInstance();
-
-	return pInstance;
-}
-
-void CollisionManager::DestroyInstance() {
-	if (pInstance != nullptr) {
-		delete pInstance;
-		pInstance = nullptr;
-	}
-}
-
-CollisionManager::CollisionManager() {
-
-}
-
-bool CollisionManager::CheckCircleCollision(float x1, float y1, float r1, float x2, float y2, float r2) const {
+bool CollisionUtility::CheckCircleCollision(float x1, float y1, float r1, float x2, float y2, float r2) {
 	float dist = MathUtility::Distance(x1, y1, x2, y2);
 	return dist < (r1 + r2);
 }
 
-void CollisionManager::ResolveCircleCollision(float& x1, float& y1, float r1, float& x2, float& y2, float r2) {
+void CollisionUtility::ResolveCircleCollision(float& x1, float& y1, float r1, float& x2, float& y2, float r2) {
 	float dx = x2 - x1;
 	float dy = y2 - y1;
 
@@ -48,11 +24,11 @@ void CollisionManager::ResolveCircleCollision(float& x1, float& y1, float r1, fl
 
 }
 
-void CollisionManager::ReflectVelocity(float& vx, float& vy, float nx, float ny) {
+void CollisionUtility::ReflectVelocity(float& vx, float& vy, float nx, float ny) {
 	MathUtility::Reflect(vx, vy, nx, ny, vx, vy);
 }
 
-void CollisionManager::CheckAndReflectWall(float& px, float& py, float& vx, float& vy, float radius, float minX, float maxX, float minY, float maxY) {
+void CollisionUtility::CheckAndReflectWall(float& px, float& py, float& vx, float& vy, float radius, float minX, float maxX, float minY, float maxY) {
 	const float goalMinY = GameConfig::Goal::Top;
 	const float goalMaxY = GameConfig::Goal::Bottom;
 
@@ -85,7 +61,7 @@ void CollisionManager::CheckAndReflectWall(float& px, float& py, float& vx, floa
 	}
 }
 
-void CollisionManager::CheckMalletPuckCollision(
+void CollisionUtility::CheckMalletPuckCollision(
 	float mx, float my, float mr,
 	float& px, float& py, float pr,
 	float mvx, float mvy,
@@ -103,3 +79,4 @@ void CollisionManager::CheckMalletPuckCollision(
 	pvx *= 1.25f;
 	pvy *= 1.25f;
 }
+

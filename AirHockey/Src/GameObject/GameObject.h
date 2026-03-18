@@ -28,7 +28,7 @@ public:		//	コンストラクタとデストラクタ
 	 *	@param[in]	VECTOR _pos = VZero		初期化する座標
 	 *	@param[in]	std;;string _tag = ""	タグ
 	 */
-	GameObject(VECTOR _pos = VZero, std:: string _tag = "");
+	GameObject(VECTOR _pos = VZero, std::string _tag = "");
 
 	/*
 	 *	@breif		デストラクタ

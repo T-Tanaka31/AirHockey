@@ -22,6 +22,9 @@
     <Filter Include="GameObject\Puck">
       <UniqueIdentifier>{dd53753a-04a5-4d6f-b73b-5b59c3aeb288}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameSystem">
+      <UniqueIdentifier>{1f5e47d8-eb19-494a-ba25-30cb27d305de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Component\Collider.cpp">
@@ -40,17 +43,17 @@
     <ClCompile Include="Src\Utility\MathUtility.cpp">
       <Filter>Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Manager\CollisionManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="Src\GameObject\Mallet\Mallet.cpp">
       <Filter>GameObject\Mallet</Filter>
     </ClCompile>
     <ClCompile Include="Src\GameObject\Puck\Puck.cpp">
       <Filter>GameObject\Puck</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Component\Goal.cpp">
-      <Filter>Component</Filter>
+    <ClCompile Include="Src\Utility\CollisionUtility.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Manager\ScoreManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,20 +87,26 @@
     <ClInclude Include="Src\Utility\MathUtility.h">
       <Filter>Utility</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Manager\CollisionManager.h">
-      <Filter>Manager</Filter>
-    </ClInclude>
     <ClInclude Include="Src\GameObject\Mallet\Mallet.h">
       <Filter>GameObject\Mallet</Filter>
     </ClInclude>
     <ClInclude Include="Src\GameObject\Puck\Puck.h">
       <Filter>GameObject\Puck</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Component\Goal.h">
-      <Filter>Component</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Definition\GameDefine.h">
       <Filter>Definition</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Utility\CollisionUtility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Component\Goal.h">
+      <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameSystem\Score.h">
+      <Filter>GameSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Manager\ScoreManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #pragma once
 #include "../GameObject.h"
-class Puck : public GameObject{
+class Puck : public GameObject {
 private:
 	float radius;
 	VECTOR velocity;
