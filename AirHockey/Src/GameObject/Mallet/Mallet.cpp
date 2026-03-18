@@ -11,7 +11,7 @@ Mallet::Mallet(VECTOR startPos, float r, float speed, float _minX, float _maxX, 
 	, minY(_minY)
 	, maxY(_maxY)
 	, velocity(VZero)
-	, puck(NULL) {
+	, puck(nullptr) {
 }
 
 void Mallet::Start() {
