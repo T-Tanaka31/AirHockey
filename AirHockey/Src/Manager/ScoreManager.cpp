@@ -40,6 +40,7 @@ void ScoreManager::Update() {
 	// ¶ƒS[ƒ‹
 	if (puck->GetPosition().x + puck->GetRadius() < leftGoal.x2) {
 		player2.Add(1);
+		player2Mallet->SetRainbow(true);
 		puck->StartReturn(GC::PuckSpawn::LeftSpawn(), GC::PuckSpawn::LeftTarget(), VGet(-0.5f, 1.5f, 0));
 		ResetRound();
 	}
@@ -47,6 +48,7 @@ void ScoreManager::Update() {
 	// ‰EƒS[ƒ‹
 	if (puck->GetPosition().x - puck->GetRadius() > WINDOW_WIDTH) {
 		player1.Add(1);
+		player1Mallet->SetRainbow(true);
 		puck->StartReturn(GC::PuckSpawn::RightSpawn(), GC::PuckSpawn::RightTarget(), VGet(0.5f, 1.5f, 0));
 		ResetRound();
 	}

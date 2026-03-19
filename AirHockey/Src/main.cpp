@@ -5,6 +5,7 @@
 #include "Manager/InputManager.h"
 #include "Manager/ScoreManager.h"
 #include "Manager/TimeManager.h"
+#include "Manager/GameManager.h"
 #include "GameObject/Mallet/Mallet.h"
 #include "GameObject/Puck/Puck.h"
 #include "GameSystem/Goal.h"
@@ -79,7 +80,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		GC::Mallet::Speed,				//	速度
 		GC::Mallet::P2Limit.minX, GC::Mallet::P2Limit.maxX,	//	移動範囲制限(横)
 		GC::Mallet::P2Limit.minY, GC::Mallet::P2Limit.maxY,	//	移動範囲制限(縦)
-		COLOR_MAGENTA,	//	色
+		COLOR_PINK,	//	色
 		"Player3");		//	タグ
 
 	Puck* puck = new Puck(
@@ -114,6 +115,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		InputManager::GetInstance()->Update();
 		ScoreManager::GetInstance()->Update();
 		TimeManager::GetInstance()->Update();
+		GameManager::GetInstance()->Update();
 
 		player1->Update();
 		player2->Update();
@@ -129,6 +131,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//		ゲームの描画処理	処理順に注意
 		//	============================================================
 		DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, CourtHandle, true);
+
+		GameManager::GetInstance()->Render();
 
 		puck->Render();
 		player1->Render();
@@ -166,6 +170,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	InputManager::DestroyInstance();
 	ScoreManager::DestroyInstance();
 	TimeManager::DestroyInstance();
+	GameManager::DestroyInstance();
 	//	============================================================
 	//		DxLibの解放処理
 	//	============================================================

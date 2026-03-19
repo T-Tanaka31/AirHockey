@@ -17,13 +17,28 @@ Mallet::Mallet(VECTOR _startPos, float r, float speed, float _minX, float _maxX,
 	, elapsed(0.0f)
 	, returnStartPos(VZero)
 	, startPos(_startPos)
-	, color(_color){
+	, color(_color)
+	, startColor(_color){
+	Start();
 }
 
 void Mallet::Start() {
 }
 
 void Mallet::Update() {
+	
+	if (isRainbow) {
+		float systemTime = GetNowCount() / 1000.0f;
+
+		float speed = 10.0f; 
+		hue = systemTime * speed;
+
+		int r = (int)(128 + 127 * sin(hue));
+		int g = (int)(128 + 127 * sin(hue + 2.09f));
+		int b = (int)(128 + 127 * sin(hue + 4.18f));
+
+		color = GetColor(r, g, b);
+	}
 	if (isReturning) {
 		UpdateReturn();
 		return;
@@ -99,8 +114,11 @@ void Mallet::UpdateReturn() {
 	position.x = MathUtility::Lerp(returnStartPos.x, startPos.x, t);
 	position.y = MathUtility::Lerp(returnStartPos.y, startPos.y, t);
 
-	if(t >= 1.0f)
+	if (t >= 1.0f) {
 		isReturning = false;
+		isRainbow = false;
+		color = startColor;
+	}
 }
 
 void Mallet::ClampPosition() {

@@ -49,6 +49,7 @@ public:		//	Ã“Iƒƒ“ƒoŠÖ”
 #pragma endregion
 
 private:
+
 	Score player1;
 	Score player2;
 

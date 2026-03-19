@@ -75,4 +75,8 @@ namespace GameConfig {
 		}
 	}
 
+	namespace Score {
+		static constexpr int WinScore = 10;
+	}
+
 }

@@ -41,6 +41,11 @@ private:
 
 	//	êF
 	int color;
+	unsigned int startColor;
+
+	float hue = 0.0f;
+	bool isRainbow = false;
+
 
 public:
 	Mallet(VECTOR _startPos, float r, float _speed, float _minX, float _maxX, float _minY, float _maxY, int _color, std::string _tag = "Mallet");
@@ -58,6 +63,8 @@ public:
 	void ClampPosition();
 
 	inline float GetRadius() const { return radius; }
+
+	inline void SetRainbow(bool _rainbow) { isRainbow = _rainbow; }
 
 	void SetPuck(Puck* p) { puck = p; }
 	
