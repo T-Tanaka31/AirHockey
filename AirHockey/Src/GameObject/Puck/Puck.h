@@ -6,6 +6,19 @@ private:
 	VECTOR velocity;
 	float friction;
 	VECTOR startPos;
+
+	bool isReturning;
+	float elapsed;
+	float returnDuration = 0.6f;
+
+	bool waitingAfterReturn = false;
+	float waitTimer = 0.0f;
+	float waitDuration = 0.3f;
+
+	VECTOR returnStartPos;
+	VECTOR targetPos;
+
+	VECTOR impulseDir;
 public:
 	Puck(VECTOR _startPos, float _r, float _friction = GameConfig::Puck::Friction, std::string _tag = "Puck");
 
@@ -17,6 +30,11 @@ public:
 	void SetVelocity(float _vx, float _vy);
 
 	void CheckWallCollision(float _minX, float _maxX, float _minY, float _maxY);
+
+	void StartReturn(const VECTOR& _spawnPos, const VECTOR& _targetPos, VECTOR _impulseDir);
+
+	void UpdateReturn();
+	void AddSmallImpulse();
 
 	inline float GetRadius() const { return radius; }
 

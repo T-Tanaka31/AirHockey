@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Component\Collider.h" />
-    <ClInclude Include="Src\Component\Goal.h" />
     <ClInclude Include="Src\Definition\Colors.h" />
     <ClInclude Include="Src\Definition\Constants.h" />
     <ClInclude Include="Src\Definition\Definition.h" />
@@ -30,6 +29,7 @@
     <ClInclude Include="Src\GameObject\GameObject.h" />
     <ClInclude Include="Src\GameObject\Mallet\Mallet.h" />
     <ClInclude Include="Src\GameObject\Puck\Puck.h" />
+    <ClInclude Include="Src\GameSystem\Goal.h" />
     <ClInclude Include="Src\GameSystem\Score.h" />
     <ClInclude Include="Src\Manager\InputManager.h" />
     <ClInclude Include="Src\Manager\ScoreManager.h" />

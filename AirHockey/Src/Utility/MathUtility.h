@@ -21,7 +21,7 @@ public:
 	//	ベクトルの正規化
 	static void Normalize(float& x, float& y);
 
-	//	内積
+	//	内積s
 	static float Dot(float ax, float ay, float bx, float by);
 
 	//	反射ベクトル
@@ -36,5 +36,13 @@ public:
 	//	値 t は length より大きくはならず 0 より小さくはならず、その間をループ
 	static float Repeat(float t, float length);
 
+	//	だんだん加速
+	static float EaseIn(float t);
+
+	//	だんだん遅く
+	static float EaseOut(float t);
+
+	//	加速してから減速
+	static float EasInOut(float t);
 };
 

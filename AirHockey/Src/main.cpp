@@ -4,6 +4,7 @@
 #include "Definition/Definition.h"
 #include "Manager/InputManager.h"
 #include "Manager/ScoreManager.h"
+#include "Manager/TimeManager.h"
 #include "GameObject/Mallet/Mallet.h"
 #include "GameObject/Puck/Puck.h"
 #include "GameSystem/Goal.h"
@@ -63,10 +64,29 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	namespace GC = GameConfig;
 
-	Mallet* player1 = new Mallet(GC::Mallet::Player1StartPos, GC::Mallet::Radius, GC::Mallet::Speed, GC::Mallet::P1Limit.minX, GC::Mallet::P1Limit.maxX, GC::Mallet::P1Limit.minY, GC::Mallet::P1Limit.maxY, "Player1");
-	Mallet* player2 = new Mallet(GC::Mallet::Player2StartPos, GC::Mallet::Radius, GC::Mallet::Speed, GC::Mallet::P2Limit.minX, GC::Mallet::P2Limit.maxX, GC::Mallet::P2Limit.minY, GC::Mallet::P2Limit.maxY, "Player3");
+	Mallet* player1 = new Mallet(
+		GC::Mallet::Player1StartPos,	//	初期位置
+		GC::Mallet::Radius,				//	半径
+		GC::Mallet::Speed,				//	速度
+		GC::Mallet::P1Limit.minX, GC::Mallet::P1Limit.maxX,	//	移動範囲制限(横)
+		GC::Mallet::P1Limit.minY, GC::Mallet::P1Limit.maxY,	//	移動範囲制限(縦)
+		COLOR_CYAN,		//	色
+		"Player1");		//	タグ
 
-	Puck* puck = new Puck(GC::Puck::StartPos, GC::Puck::Radius, GC::Puck::Friction, "Puck");
+	Mallet* player2 = new Mallet(
+		GC::Mallet::Player2StartPos,	//	初期位置
+		GC::Mallet::Radius,				//	半径
+		GC::Mallet::Speed,				//	速度
+		GC::Mallet::P2Limit.minX, GC::Mallet::P2Limit.maxX,	//	移動範囲制限(横)
+		GC::Mallet::P2Limit.minY, GC::Mallet::P2Limit.maxY,	//	移動範囲制限(縦)
+		COLOR_MAGENTA,	//	色
+		"Player3");		//	タグ
+
+	Puck* puck = new Puck(
+		GC::Puck::StartPos,	//	初期位置
+		GC::Puck::Radius,	//	半径
+		GC::Puck::Friction,	//	摩擦抵抗
+		"Puck");			//	タグ
 
 	ScoreManager::GetInstance()->SetPuck(puck);
 	ScoreManager::GetInstance()->SetMallet(player1, player2);
@@ -91,15 +111,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		// 描画先画面を裏画面にする
 		SetDrawScreen(DX_SCREEN_BACK);
 
-		player1->UpdateByGamepad(0);
-		player2->UpdateByGamepad(1);
+		InputManager::GetInstance()->Update();
+		ScoreManager::GetInstance()->Update();
+		TimeManager::GetInstance()->Update();
 
 		player1->Update();
 		player2->Update();
+
+		player1->UpdateByGamepad(0);
+		player2->UpdateByGamepad(1);
 		puck->Update();
 
-		InputManager::GetInstance()->Update();
-		ScoreManager::GetInstance()->Update();
 		//	画面をクリアする
 		ClearDrawScreen();
 
@@ -143,6 +165,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	InputManager::DestroyInstance();
 	ScoreManager::DestroyInstance();
+	TimeManager::DestroyInstance();
 	//	============================================================
 	//		DxLibの解放処理
 	//	============================================================

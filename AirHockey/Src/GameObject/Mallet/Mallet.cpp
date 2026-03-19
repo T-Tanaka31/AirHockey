@@ -1,9 +1,10 @@
 #include "Mallet.h"
 #include "../../Utility/MathUtility.h"
 #include "../../Utility/CollisionUtility.h"
+#include "../../Manager/TimeManager.h"
 
-Mallet::Mallet(VECTOR startPos, float r, float speed, float _minX, float _maxX, float _minY, float _maxY, std::string _tag)
-	: GameObject(startPos, _tag)
+Mallet::Mallet(VECTOR _startPos, float r, float speed, float _minX, float _maxX, float _minY, float _maxY, int _color, std::string _tag)
+	: GameObject(_startPos, _tag)
 	, radius(r)
 	, moveSpeed(speed)
 	, minX(_minX)
@@ -11,13 +12,23 @@ Mallet::Mallet(VECTOR startPos, float r, float speed, float _minX, float _maxX, 
 	, minY(_minY)
 	, maxY(_maxY)
 	, velocity(VZero)
-	, puck(nullptr) {
+	, puck(nullptr)
+	, isReturning(false)
+	, elapsed(0.0f)
+	, returnStartPos(VZero)
+	, startPos(_startPos)
+	, color(_color){
 }
 
 void Mallet::Start() {
 }
 
 void Mallet::Update() {
+	if (isReturning) {
+		UpdateReturn();
+		return;
+	}
+
 	if (!puck) return;
 
 	// Õ“Ë‚µ‚Ä‚¢‚é‚©
@@ -45,10 +56,11 @@ void Mallet::Update() {
 }
 
 void Mallet::Render() {
-	DrawCircle((int)position.x, (int)position.y, (int)radius, COLOR_CYAN, TRUE);
+	DrawCircle((int)position.x, (int)position.y, (int)radius, color, TRUE);
 }
 
 void Mallet::UpdateByGamepad(int _padID) {
+
 	auto input = InputManager::GetInstance();
 
 	float inputX = input->IsJoypadSthick(_padID, "L_Horizontal");
@@ -67,6 +79,28 @@ void Mallet::UpdateByGamepad(int _padID) {
 
 	ClampPosition();
 
+}
+
+void Mallet::StartReturn() {
+	isReturning = true;
+	elapsed = 0.0f;
+
+	returnStartPos = position;
+}
+
+void Mallet::UpdateReturn() {
+	float dt = 1.0f / FPS;
+
+	elapsed += dt;
+
+	float t = elapsed / returnDuration;
+	if (t > 1.0f) t = 1.0f;
+
+	position.x = MathUtility::Lerp(returnStartPos.x, startPos.x, t);
+	position.y = MathUtility::Lerp(returnStartPos.y, startPos.y, t);
+
+	if(t >= 1.0f)
+		isReturning = false;
 }
 
 void Mallet::ClampPosition() {

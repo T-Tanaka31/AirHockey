@@ -6,7 +6,9 @@ Puck::Puck(VECTOR _startPos, float _r, float _friction, std::string _tag)
 	: GameObject(_startPos, _tag)
 	, radius(_r)
 	, friction(_friction)
-	, startPos(_startPos) {
+	, startPos(_startPos)
+	, isReturning(false)
+	, elapsed(0.0f){
 	velocity = VZero;
 }
 
@@ -14,6 +16,23 @@ void Puck::Start() {
 }
 
 void Puck::Update() {
+	if (isReturning) {
+		UpdateReturn();
+		return;
+	}
+
+	if (waitingAfterReturn) {
+		waitTimer += 1.0f / 60.0f;
+
+		if (waitTimer >= waitDuration) {
+			waitingAfterReturn = false;
+			AddSmallImpulse(); 
+		}
+
+		return;
+	}
+
+
 	// --- 摩擦による減速 ---
 	velocity.x *= friction;
 	velocity.y *= friction;
@@ -66,6 +85,52 @@ void Puck::CheckWallCollision(float _minX, float _maxX, float _minY, float _maxY
 		_minX, _maxX,
 		_minY, _maxY
 	);
+
+}
+
+void Puck::StartReturn(const VECTOR& _spawnPos, const VECTOR& _targetPos, VECTOR _impulseDir) {
+	isReturning = true;
+	elapsed = 0.0f;
+
+	// まず画面外に瞬間移動
+	position = _spawnPos;
+
+	returnStartPos = _spawnPos;
+	this->targetPos = _targetPos;
+
+	this->impulseDir = _impulseDir;
+	velocity = VZero;
+}
+
+
+
+void Puck::UpdateReturn() {
+	float dt = 1.0f / FPS;
+	elapsed += dt;
+
+	float t = elapsed / returnDuration;
+	if (t > 1.0f) t = 1.0f;
+
+	position.x = MathUtility::Lerp(returnStartPos.x, targetPos.x, t);
+	position.y = MathUtility::Lerp(returnStartPos.y, targetPos.y, t);
+
+	// ★ コート内に入ったら戻り終了
+	if (GameConfig::Court::IsInside(position)) {
+		isReturning = false;
+		waitingAfterReturn = true;
+		waitTimer = 0.0f;
+	}
+
+	if (t >= 1.0f)
+		isReturning = false;
+
+}
+
+void Puck::AddSmallImpulse() {
+	float power = GameConfig::Puck::PushPower;
+
+	velocity.x = impulseDir.x * power;
+	velocity.y = impulseDir.y * power;
 
 }
 

@@ -66,3 +66,18 @@ float MathUtility::Lerp(float a, float b, float t) {
 float MathUtility::Repeat(float t, float length) {
 	return t - float(t / length) * length;
 }
+
+float MathUtility::EaseIn(float t) {
+	return t * t;
+}
+
+float MathUtility::EaseOut(float t) {
+	return 1.0f - (1.0f - t) * (1.0f - t);
+}
+
+float MathUtility::EasInOut(float t) {
+	return t < 0.5f
+		? 2.0f * t * t
+		: 1.0f - powf(-2.0f * t + 2.0f, 2.0f) / 2.0f;
+
+}
