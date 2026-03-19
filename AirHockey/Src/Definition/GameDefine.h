@@ -5,8 +5,8 @@ namespace GameConfig {
 	//	パック
 	namespace Puck {
 		static constexpr float Radius = 50.0f;		//	半径
-		static constexpr float Friction = 0.995f;	//	摩擦抵抗
-		static constexpr float MaxSpeed = 80.0f;	//	最高速度
+		static constexpr float Friction = 0.99f;	//	摩擦抵抗
+		static constexpr float MaxSpeed = 90.0f;	//	最高速度
 		static constexpr float PushPower = 6.0f;	//	押し出す力
 
 		const VECTOR StartPos = VGet(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 0);	//	初期位置
@@ -15,7 +15,7 @@ namespace GameConfig {
 	//	マレット
 	namespace Mallet {
 		static constexpr float Radius = 70.0f;	//	半径
-		static constexpr float Speed = 25.0f;	//	速度
+		static constexpr float Speed = 30.0f;	//	速度
 
 		const VECTOR Player1StartPos = VGet(320.0f, 840.0f, 0.0f);	//	Player1の初期位置
 		const VECTOR Player2StartPos = VGet(1600.0f, 240.0f, 0.0f);	//	Player2の初期位置
@@ -75,8 +75,9 @@ namespace GameConfig {
 		}
 	}
 
+	//	スコア
 	namespace Score {
-		static constexpr int WinScore = 10;
+		static constexpr int WinScore = 999;
 	}
 
 }

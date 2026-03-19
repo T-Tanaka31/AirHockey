@@ -39,7 +39,7 @@ void GameManager::Update() {
 }
 
 void GameManager::Render() {
-	modelHandle = LoadGraph("Res/keke.png");
+	modelHandle = LoadGraph("Res/îwåi4.png");
 	if(isWin)
 		DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, modelHandle, true);
 }

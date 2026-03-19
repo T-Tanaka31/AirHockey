@@ -73,8 +73,8 @@ void CollisionUtility::CheckMalletPuckCollision(
 
 	MathUtility::Reflect(pvx, pvy, nx, ny, pvx, pvy);
 
-	pvx += mvx * 0.6f;
-	pvy += mvy * 0.6f;
+	pvx += mvx * 0.8f;
+	pvy += mvy * 0.8f;
 
 	pvx *= 1.25f;
 	pvy *= 1.25f;

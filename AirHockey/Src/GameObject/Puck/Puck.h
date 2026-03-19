@@ -13,7 +13,7 @@ private:
 
 	bool waitingAfterReturn = false;
 	float waitTimer = 0.0f;
-	float waitDuration = 0.3f;
+	float waitDuration = 0.5f;
 
 	VECTOR returnStartPos;
 	VECTOR targetPos;
