@@ -36,6 +36,7 @@
     <ClInclude Include="Src\Manager\ScoreManager.h" />
     <ClInclude Include="Src\Manager\TimeManager.h" />
     <ClInclude Include="Src\Utility\CollisionUtility.h" />
+    <ClInclude Include="Src\Utility\ColorUtility.h" />
     <ClInclude Include="Src\Utility\MathUtility.h" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +50,7 @@
     <ClCompile Include="Src\Manager\ScoreManager.cpp" />
     <ClCompile Include="Src\Manager\TimeManager.cpp" />
     <ClCompile Include="Src\Utility\CollisionUtility.cpp" />
+    <ClCompile Include="Src\Utility\ColorUtility.cpp" />
     <ClCompile Include="Src\Utility\MathUtility.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

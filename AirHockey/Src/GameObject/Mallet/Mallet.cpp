@@ -1,6 +1,7 @@
 #include "Mallet.h"
 #include "../../Utility/MathUtility.h"
 #include "../../Utility/CollisionUtility.h"
+#include "../../Utility/ColorUtility.h"
 #include "../../Manager/TimeManager.h"
 
 Mallet::Mallet(VECTOR _startPos, float r, float speed, float _minX, float _maxX, float _minY, float _maxY, int _color, std::string _tag)
@@ -18,7 +19,8 @@ Mallet::Mallet(VECTOR _startPos, float r, float speed, float _minX, float _maxX,
 	, returnStartPos(VZero)
 	, startPos(_startPos)
 	, color(_color)
-	, startColor(_color){
+	, startColor(_color)
+	, padID(){
 	Start();
 }
 
@@ -28,21 +30,14 @@ void Mallet::Start() {
 void Mallet::Update() {
 	
 	if (isRainbow) {
-		float systemTime = GetNowCount() / 1000.0f;
-
-		float speed = 10.0f; 
-		hue = systemTime * speed;
-
-		int r = (int)(128 + 127 * sin(hue));
-		int g = (int)(128 + 127 * sin(hue + 2.09f));
-		int b = (int)(128 + 127 * sin(hue + 4.18f));
-
-		color = GetColor(r, g, b);
+		color = ColorUtility::ToRainbowColor(color);
 	}
 	if (isReturning) {
 		UpdateReturn();
 		return;
 	}
+
+	UpdateByGamepad(padID);
 
 	if (!puck) return;
 
@@ -108,7 +103,7 @@ void Mallet::UpdateReturn() {
 
 	elapsed += dt;
 
-	float t = elapsed / returnDuration;
+	float t = elapsed / GameConfig::Mallet::ReturnDuration;
 	if (t > 1.0f) t = 1.0f;
 
 	position.x = MathUtility::Lerp(returnStartPos.x, startPos.x, t);

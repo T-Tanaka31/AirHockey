@@ -61,6 +61,11 @@ private:
 	Mallet* player1Mallet;
 	Mallet* player2Mallet;
 
+	int p1Color;
+	int p2Color;
+
+	float scorePosY;
+
 public:
 
 	void Update();

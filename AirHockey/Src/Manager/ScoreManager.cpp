@@ -1,6 +1,7 @@
 #include "ScoreManager.h"
 #include "../Definition/Definition.h"
 #include <DxLib.h>
+#include "../Utility/ColorUtility.h"
 
 namespace GC = GameConfig;
 
@@ -30,7 +31,10 @@ ScoreManager::ScoreManager()
 	, rightGoal(WINDOW_WIDTH - GC::Goal::Width, GC::Goal::Top, WINDOW_WIDTH, GC::Goal::Bottom)
 	, puck(nullptr)
 	, player1Mallet(nullptr)
-	, player2Mallet(nullptr){
+	, player2Mallet(nullptr)
+	, p1Color(COLOR_RED)
+	, p2Color(COLOR_RED)
+	, scorePosY(50){
 }
 
 void ScoreManager::Update() {
@@ -52,12 +56,30 @@ void ScoreManager::Update() {
 		puck->StartReturn(GC::PuckSpawn::RightSpawn(), GC::PuckSpawn::RightTarget(), VGet(0.5f, 1.5f, 0));
 		ResetRound();
 	}
+
+	if (player2Mallet->GetIsRainbow()) {
+		p2Color = ColorUtility::ToRainbowColor(p2Color);
+		SetFontSize(120);
+		scorePosY = GC::Court::HalfCourt.y - 50;
+		return;
+	}
+	else if (player1Mallet->GetIsRainbow()) {
+		p1Color = ColorUtility::ToRainbowColor(p1Color);
+		SetFontSize(120);
+		scorePosY = GC::Court::HalfCourt.y - 50;
+		return;
+	}
+	else {
+		p2Color = COLOR_RED;
+		p1Color = COLOR_RED;
+		SetFontSize(60);
+		scorePosY = 50;
+	}
 }
 
 void ScoreManager::Draw() const {
-	DrawFormatString(820, 50, COLOR_RED, "%d", player1.GetValue());
-	DrawFormatString(1100, 50, COLOR_RED, "%d", player2.GetValue());
-
+	DrawFormatString(GC::Court::HalfCourt.x - 200, scorePosY, p1Color, "%d", player1.GetValue());
+	DrawFormatString(GC::Court::HalfCourt.x + 140, scorePosY, p2Color, "%d", player2.GetValue());
 }
 
 void ScoreManager::ResetRound() {

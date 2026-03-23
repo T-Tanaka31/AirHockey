@@ -9,7 +9,6 @@ private:
 
 	bool isReturning;
 	float elapsed;
-	float returnDuration = 0.6f;
 
 	bool waitingAfterReturn = false;
 	float waitTimer = 0.0f;

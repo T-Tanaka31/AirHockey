@@ -94,6 +94,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	player1->SetPuck(puck);
 	player2->SetPuck(puck);
+	player1->SetPadID(0);
+	player2->SetPadID(1);
+
+	SetFontSize(60);
 
 	//	============================================================
 	//		ゲームのメインループ
@@ -120,8 +124,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		player1->Update();
 		player2->Update();
 
-		player1->UpdateByGamepad(0);
-		player2->UpdateByGamepad(1);
 		puck->Update();
 
 		//	画面をクリアする
@@ -167,9 +169,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	delete player2;
 	delete puck;
 
+	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();
 	ScoreManager::DestroyInstance();
-	TimeManager::DestroyInstance();
 	GameManager::DestroyInstance();
 	//	============================================================
 	//		DxLibの解放処理

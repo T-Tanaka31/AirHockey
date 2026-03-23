@@ -8,7 +8,10 @@ Puck::Puck(VECTOR _startPos, float _r, float _friction, std::string _tag)
 	, friction(_friction)
 	, startPos(_startPos)
 	, isReturning(false)
-	, elapsed(0.0f){
+	, elapsed(0.0f)
+	, targetPos(VZero)
+	, returnStartPos(VZero)
+	, impulseDir(VZero){
 	velocity = VZero;
 }
 
@@ -108,7 +111,7 @@ void Puck::UpdateReturn() {
 	float dt = 1.0f / FPS;
 	elapsed += dt;
 
-	float t = elapsed / returnDuration;
+	float t = elapsed / GameConfig::PuckSpawn::ReturnDuration;
 	if (t > 1.0f) t = 1.0f;
 
 	position.x = MathUtility::Lerp(returnStartPos.x, targetPos.x, t);
