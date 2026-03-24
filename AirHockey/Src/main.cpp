@@ -6,9 +6,6 @@
 #include "Manager/ScoreManager.h"
 #include "Manager/TimeManager.h"
 #include "Manager/GameManager.h"
-#include "GameObject/Mallet/Mallet.h"
-#include "GameObject/Puck/Puck.h"
-#include "GameSystem/Goal.h"
 
 /*
  *	@brief		Windowプログラムのエントリーポイント
@@ -63,42 +60,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
 	int CourtHandle = LoadGraph("Res/court.png");
 
-	namespace GC = GameConfig;
-
-	Mallet* player1 = new Mallet(
-		GC::Mallet::Player1StartPos,	//	初期位置
-		GC::Mallet::Radius,				//	半径
-		GC::Mallet::Speed,				//	速度
-		GC::Mallet::P1Limit.minX, GC::Mallet::P1Limit.maxX,	//	移動範囲制限(横)
-		GC::Mallet::P1Limit.minY, GC::Mallet::P1Limit.maxY,	//	移動範囲制限(縦)
-		COLOR_CYAN,		//	色
-		"Player1");		//	タグ
-
-	Mallet* player2 = new Mallet(
-		GC::Mallet::Player2StartPos,	//	初期位置
-		GC::Mallet::Radius,				//	半径
-		GC::Mallet::Speed,				//	速度
-		GC::Mallet::P2Limit.minX, GC::Mallet::P2Limit.maxX,	//	移動範囲制限(横)
-		GC::Mallet::P2Limit.minY, GC::Mallet::P2Limit.maxY,	//	移動範囲制限(縦)
-		COLOR_PINK,	//	色
-		"Player3");		//	タグ
-
-	Puck* puck = new Puck(
-		GC::Puck::StartPos,	//	初期位置
-		GC::Puck::Radius,	//	半径
-		GC::Puck::Friction,	//	摩擦抵抗
-		"Puck");			//	タグ
-
-	ScoreManager::GetInstance()->SetPuck(puck);
-	ScoreManager::GetInstance()->SetMallet(player1, player2);
-
-	player1->SetPuck(puck);
-	player2->SetPuck(puck);
-	player1->SetPadID(0);
-	player2->SetPadID(1);
-
-	SetFontSize(60);
-
+	GameManager::GetInstance()->Init();
 	//	============================================================
 	//		ゲームのメインループ
 	//	============================================================
@@ -121,11 +83,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		TimeManager::GetInstance()->Update();
 		GameManager::GetInstance()->Update();
 
-		player1->Update();
-		player2->Update();
-
-		puck->Update();
-
 		//	画面をクリアする
 		ClearDrawScreen();
 
@@ -135,16 +92,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, CourtHandle, true);
 
 		GameManager::GetInstance()->Render();
-
-		puck->Render();
-		player1->Render();
-		player2->Render();
-
-		ScoreManager::GetInstance()->Draw();
-
-		DrawBox(0, GC::Goal::Top, -GC::Goal::Width, GC::Goal::Bottom, COLOR_BLACK, FALSE);
-		DrawBox(WINDOW_WIDTH, GC::Goal::Top, WINDOW_WIDTH + GC::Goal::Width, GC::Goal::Bottom, COLOR_BLACK, FALSE);
-
 
 		// 画面の更新
 		ScreenFlip();
@@ -165,9 +112,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//		ゲームの解放処理
 	//	============================================================
 
-	delete player1;
-	delete player2;
-	delete puck;
+	GameManager::GetInstance()->Delete();
 
 	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();

@@ -1,4 +1,9 @@
 #pragma once
+#include "../GameSystem/GameState.h"
+#include "../GameObject/Mallet/Mallet.h"
+#include "../GameObject/Puck/Puck.h"
+#include "../GameSystem/Goal.h"
+
 class GameManager {
 #pragma region シングルトンのデータ構造
 private:
@@ -25,15 +30,43 @@ public:
 #pragma endregion
 
 private:
-	bool isWin;
 	int modelHandle;
 
+	//	ゲーム状態
+	GameState state;
+
+	//	ゲームオブジェクト
+	Mallet* player1;
+	Mallet* player2;
+	Puck* puck;
+
+	//	ゴール
+	Goal* leftGoal;
+	Goal* rightGoal;
+
+	int winnerID = 0;
+
+	bool changeResult = false;
+
 public:
+	void Init();
 	void Start();
 	void Update();
 	void Render();
 
-	void WinGame();
+	void Delete();
+
+private:
+	//	内部処理
+	void UpdateTitle();
+	void UpdateGamePlay();
+	void UpdatePause();
+	void UpdateResult();
+
+	void CheckGoal();
+	void ResetRound();
+
+	void ResetGame();
 
 };
 

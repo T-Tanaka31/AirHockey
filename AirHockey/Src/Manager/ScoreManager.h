@@ -53,9 +53,6 @@ private:
 	Score player1;
 	Score player2;
 
-	Goal leftGoal;
-	Goal rightGoal;
-
 	Puck* puck;
 
 	Mallet* player1Mallet;
@@ -71,10 +68,13 @@ public:
 	void Update();
 	void Draw() const;
 
-	void ResetRound();
+	void AddScore(int playerID);
 
 	int GetPlayer1Score() const { return player1.GetValue(); }
 	int GetPlayer2Score() const { return player2.GetValue(); }
+
+	void ResetScore();
+
 
 	void SetPuck(Puck* _puck) { puck = _puck; }
 	void SetMallet(Mallet* _p1, Mallet* _p2) { player1Mallet = _p1, player2Mallet = _p2; }

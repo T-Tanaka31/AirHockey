@@ -85,7 +85,7 @@ namespace GameConfig {
 
 	//	ÉXÉRÉA
 	namespace Score {
-		static constexpr int WinScore = 999;
+		static constexpr int WinScore = 1;
 	}
 
 }

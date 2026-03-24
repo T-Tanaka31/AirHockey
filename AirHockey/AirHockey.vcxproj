@@ -29,8 +29,10 @@
     <ClInclude Include="Src\GameObject\GameObject.h" />
     <ClInclude Include="Src\GameObject\Mallet\Mallet.h" />
     <ClInclude Include="Src\GameObject\Puck\Puck.h" />
+    <ClInclude Include="Src\GameSystem\GameState.h" />
     <ClInclude Include="Src\GameSystem\Goal.h" />
     <ClInclude Include="Src\GameSystem\Score.h" />
+    <ClInclude Include="Src\Manager\FadeManager.h" />
     <ClInclude Include="Src\Manager\GameManager.h" />
     <ClInclude Include="Src\Manager\InputManager.h" />
     <ClInclude Include="Src\Manager\ScoreManager.h" />
@@ -45,6 +47,7 @@
     <ClCompile Include="Src\GameObject\Mallet\Mallet.cpp" />
     <ClCompile Include="Src\GameObject\Puck\Puck.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Manager\FadeManager.cpp" />
     <ClCompile Include="Src\Manager\GameManager.cpp" />
     <ClCompile Include="Src\Manager\InputManager.cpp" />
     <ClCompile Include="Src\Manager\ScoreManager.cpp" />

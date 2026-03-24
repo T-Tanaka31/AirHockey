@@ -27,9 +27,7 @@ void ScoreManager::DestroyInstance() {
 }
 
 ScoreManager::ScoreManager()
-	: leftGoal(0, GC::Goal::Top, GC::Goal::Width, GC::Goal::Bottom)
-	, rightGoal(WINDOW_WIDTH - GC::Goal::Width, GC::Goal::Top, WINDOW_WIDTH, GC::Goal::Bottom)
-	, puck(nullptr)
+	: puck(nullptr)
 	, player1Mallet(nullptr)
 	, player2Mallet(nullptr)
 	, p1Color(COLOR_RED)
@@ -38,25 +36,6 @@ ScoreManager::ScoreManager()
 }
 
 void ScoreManager::Update() {
-	const auto pos = puck->GetPosition();
-	const auto r = puck->GetRadius();
-
-	// ¶ƒS[ƒ‹
-	if (puck->GetPosition().x + puck->GetRadius() < leftGoal.x2) {
-		player2.Add(1);
-		player2Mallet->SetRainbow(true);
-		puck->StartReturn(GC::PuckSpawn::LeftSpawn(), GC::PuckSpawn::LeftTarget(), VGet(-0.5f, 1.5f, 0));
-		ResetRound();
-	}
-
-	// ‰EƒS[ƒ‹
-	if (puck->GetPosition().x - puck->GetRadius() > WINDOW_WIDTH) {
-		player1.Add(1);
-		player1Mallet->SetRainbow(true);
-		puck->StartReturn(GC::PuckSpawn::RightSpawn(), GC::PuckSpawn::RightTarget(), VGet(0.5f, 1.5f, 0));
-		ResetRound();
-	}
-
 	if (player2Mallet->GetIsRainbow()) {
 		p2Color = ColorUtility::ToRainbowColor(p2Color);
 		SetFontSize(120);
@@ -78,11 +57,20 @@ void ScoreManager::Update() {
 }
 
 void ScoreManager::Draw() const {
-	DrawFormatString(GC::Court::HalfCourt.x - 200, scorePosY, p1Color, "%d", player1.GetValue());
-	DrawFormatString(GC::Court::HalfCourt.x + 140, scorePosY, p2Color, "%d", player2.GetValue());
+	DrawFormatString((int)GC::Court::HalfCourt.x - 200, (int)scorePosY, p1Color, "%d", player1.GetValue());
+	DrawFormatString((int)GC::Court::HalfCourt.x + 140, (int)scorePosY, p2Color, "%d", player2.GetValue());
 }
 
-void ScoreManager::ResetRound() {
-	player1Mallet->StartReturn();
-	player2Mallet->StartReturn();
+void ScoreManager::AddScore(int playerID) {
+	if (playerID == 1) {
+		player1.Add(1);
+	}
+	else if (playerID == 2) {
+		player2.Add(1);
+	}
+}
+
+void ScoreManager::ResetScore() {
+	player1.Reset();
+	player2.Reset();
 }
