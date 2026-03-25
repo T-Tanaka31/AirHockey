@@ -18,6 +18,8 @@ private:
 	VECTOR targetPos;
 
 	VECTOR impulseDir;
+
+	int lastHitPadID = -1;
 public:
 	Puck(VECTOR _startPos, float _r, float _friction = GameConfig::Puck::Friction, std::string _tag = "Puck");
 
@@ -34,6 +36,10 @@ public:
 
 	void UpdateReturn();
 	void AddSmallImpulse();
+
+	void SetLastHitPadID(int id) { lastHitPadID = id; }
+
+	int GetLastHitPadID() const { return lastHitPadID; }
 
 	inline float GetRadius() const { return radius; }
 

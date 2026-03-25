@@ -48,9 +48,10 @@ private:
 
 	bool changeResult = false;
 
+	int color = 0;
+
 public:
 	void Init();
-	void Start();
 	void Update();
 	void Render();
 
@@ -58,9 +59,7 @@ public:
 
 private:
 	//	ì‡ïîèàóù
-	void UpdateTitle();
 	void UpdateGamePlay();
-	void UpdatePause();
 	void UpdateResult();
 
 	void CheckGoal();
@@ -68,5 +67,8 @@ private:
 
 	void ResetGame();
 
+	void HandleMalletCollision(Mallet* _mallet, unsigned int _sparkColor);
+
+	void CheckWinCondition(int _playerID, int _score);
 };
 

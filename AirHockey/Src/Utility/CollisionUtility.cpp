@@ -28,7 +28,13 @@ void CollisionUtility::ReflectVelocity(float& vx, float& vy, float nx, float ny)
 	MathUtility::Reflect(vx, vy, nx, ny, vx, vy);
 }
 
-void CollisionUtility::CheckAndReflectWall(float& px, float& py, float& vx, float& vy, float radius, float minX, float maxX, float minY, float maxY) {
+void CollisionUtility::CheckAndReflectWall(
+	float& px, float& py,
+	float& vx, float& vy,
+	float radius,
+	float minX, float maxX,
+	float minY, float maxY
+) {
 	const float goalMinY = GameConfig::Goal::Top;
 	const float goalMaxY = GameConfig::Goal::Bottom;
 
@@ -78,5 +84,37 @@ void CollisionUtility::CheckMalletPuckCollision(
 
 	pvx *= 1.25f;
 	pvy *= 1.25f;
+}
+
+bool CollisionUtility::CheckAndHandleMalletPuckCollision(
+	float mx, float my, float mr,
+	float& px, float& py, float pr,
+	float mvx, float mvy,
+	float& pvx, float& pvy
+) {
+	float dx = px - mx;
+	float dy = py - my;
+	float dist = MathUtility::Length(dx, dy);
+
+	// 当たっていなければ終了
+	if (dist >= (mr + pr) || dist == 0.0f) return false;
+
+	// 1. めり込み補正（ガタつき防止）
+	float nx = dx / dist;
+	float ny = dy / dist;
+	float overlap = (mr + pr) - dist;
+	px += nx * overlap;
+	py += ny * overlap;
+
+	// 2. 反射計算
+	MathUtility::Reflect(pvx, pvy, nx, ny, pvx, pvy);
+
+	// 3. マレットの速度を乗せる（手応え）
+	pvx += mvx * 0.8f;
+	pvy += mvy * 0.8f;
+	pvx *= 1.25f;
+	pvy *= 1.25f;
+
+	return true;
 }
 

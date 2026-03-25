@@ -23,8 +23,10 @@
     <ClInclude Include="Src\Definition\Colors.h" />
     <ClInclude Include="Src\Definition\Constants.h" />
     <ClInclude Include="Src\Definition\Definition.h" />
+    <ClInclude Include="Src\Definition\GameConstants.h" />
     <ClInclude Include="Src\Definition\GameDefine.h" />
     <ClInclude Include="Src\Definition\Macros.h" />
+    <ClInclude Include="Src\Definition\TypeDefinition.h" />
     <ClInclude Include="Src\Definition\VectorDefines.h" />
     <ClInclude Include="Src\GameObject\GameObject.h" />
     <ClInclude Include="Src\GameObject\Mallet\Mallet.h" />
@@ -32,6 +34,7 @@
     <ClInclude Include="Src\GameSystem\GameState.h" />
     <ClInclude Include="Src\GameSystem\Goal.h" />
     <ClInclude Include="Src\GameSystem\Score.h" />
+    <ClInclude Include="Src\Manager\EffectManager.h" />
     <ClInclude Include="Src\Manager\FadeManager.h" />
     <ClInclude Include="Src\Manager\GameManager.h" />
     <ClInclude Include="Src\Manager\InputManager.h" />
@@ -47,6 +50,7 @@
     <ClCompile Include="Src\GameObject\Mallet\Mallet.cpp" />
     <ClCompile Include="Src\GameObject\Puck\Puck.cpp" />
     <ClCompile Include="Src\main.cpp" />
+    <ClCompile Include="Src\Manager\EffectManager.cpp" />
     <ClCompile Include="Src\Manager\FadeManager.cpp" />
     <ClCompile Include="Src\Manager\GameManager.cpp" />
     <ClCompile Include="Src\Manager\InputManager.cpp" />

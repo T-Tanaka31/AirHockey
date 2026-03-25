@@ -65,6 +65,10 @@ public:
 
 	inline float GetRadius() const { return radius; }
 
+	inline VECTOR GetVelocity() const { return velocity; }
+
+	inline int GetPadID() const { return padID; }
+
 	inline void SetRainbow(bool _rainbow) { isRainbow = _rainbow; }
 
 	void SetPuck(Puck* p) { puck = p; }

@@ -102,18 +102,20 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//ScreenFlip();
 
 		//	処理が早すぎた場合に待つ
-		while (1) {
+		/*while (1) {
 			if (GetNowCount() - time >= 1000 / FPS)
 				break;
+		}*/
+		while (GetNowCount() - time < 1000 / FPS) {
+			Sleep(1);
 		}
+
 	}
 
 	//	============================================================
 	//		ゲームの解放処理
-	//	============================================================
-
-	GameManager::GetInstance()->Delete();
-
+	//	============================================================ 
+	GameManager::DestroyInstance();
 	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();
 	ScoreManager::DestroyInstance();

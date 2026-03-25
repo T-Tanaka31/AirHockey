@@ -1,6 +1,7 @@
 #include "Puck.h"
 #include "../../Utility/MathUtility.h"
 #include "../../Utility/CollisionUtility.h"
+#include "../../Manager/EffectManager.h"
 
 Puck::Puck(VECTOR _startPos, float _r, float _friction, std::string _tag)
 	: GameObject(_startPos, _tag)
@@ -35,6 +36,8 @@ void Puck::Update() {
 		return;
 	}
 
+	VECTOR prevVelocity = velocity;
+
 
 	// --- 摩擦による減速 ---
 	velocity.x *= friction;
@@ -52,6 +55,11 @@ void Puck::Update() {
 		0.0f, WINDOW_WIDTH,
 		0.0f, WINDOW_HEIGHT
 	);
+
+	if (MathUtility::HasImpact(prevVelocity, velocity, 0.5f)) {
+		// 火花エフェクトを発生させる
+		EffectManager::AddSparks(position.x, position.y, COLOR_YELLOW);
+	}
 
 	float maxSpeed = GameConfig::Puck::MaxSpeed;
 	float speed = MathUtility::Length(velocity.x, velocity.y);

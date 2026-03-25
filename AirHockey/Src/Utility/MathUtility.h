@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <cmath>
+#include <DxLib.h>
 
 class MathUtility {
 public:
@@ -44,5 +45,7 @@ public:
 
 	//	加速してから減速
 	static float EasInOut(float t);
+
+	static bool HasImpact(const VECTOR& v1, const VECTOR& v2, float threshold = 0.5f);
 };
 

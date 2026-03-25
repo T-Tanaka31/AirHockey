@@ -1,7 +1,11 @@
 #include "GameManager.h"
 #include "ScoreManager.h"
 #include "FadeManager.h"
+#include "EffectManager.h"
 #include "../Definition/Definition.h"
+#include "../Utility/ColorUtility.h"
+#include "../Utility/CollisionUtility.h"
+#include "../Utility/MathUtility.h"
 
 GameManager* GameManager::pInstance = nullptr;
 
@@ -18,8 +22,11 @@ GameManager* GameManager::GetInstance() {
 }
 
 void GameManager::DestroyInstance() {
-	delete pInstance;
-	pInstance = nullptr;
+	if (pInstance) {
+		pInstance->Delete();
+		delete pInstance;
+		pInstance = nullptr;
+	}
 }
 
 GameManager::GameManager()
@@ -30,7 +37,7 @@ GameManager::GameManager()
 	, leftGoal(nullptr)
 	, rightGoal(nullptr)
 	, changeResult(false)
-	, modelHandle(0){
+	, modelHandle(0) {
 }
 
 void GameManager::Init() {
@@ -87,13 +94,13 @@ void GameManager::Update() {
 
 			if (state == GameState::Playing && winnerID != 0) {
 				state = GameState::Result;
-				FadeManager::GetInstance()->FadeIn(1.0f); 
+				FadeManager::GetInstance()->FadeIn(1.0f);
 				return;
 			}
 
 			if (state == GameState::Result && FadeManager::GetInstance()->GetAlpha() >= 255) {
 				ResetGame();
-				FadeManager::GetInstance()->FadeIn(1.0f); 
+				FadeManager::GetInstance()->FadeIn(1.0f);
 				return;
 			}
 
@@ -122,7 +129,9 @@ void GameManager::Render() {
 		else if (winnerID == 2)
 			DrawString((int)GC::Court::HalfCourt.x - 300, (int)GC::Court::HalfCourt.y, "Player 2 WIN!", GetColor(255, 255, 0));
 
-		DrawString((int)GC::Court::HalfCourt.x - 600, (int)GC::Court::HalfCourt.y + 200, "Press SPACE to Restart", GetColor(255, 255, 255));
+		color = ColorUtility::ToRainbowColor(color);
+
+		DrawString((int)GC::Court::HalfCourt.x - 600, (int)GC::Court::HalfCourt.y + 200, "Press SPACE to Restart", color);
 
 		FadeManager::GetInstance()->Render();
 		return;
@@ -132,11 +141,9 @@ void GameManager::Render() {
 	player1->Render();
 	player2->Render();
 
-	DrawBox((int)leftGoal->x1, (int)leftGoal->y1, (int)leftGoal->x2, (int)leftGoal->y2, COLOR_BLACK, FALSE);
-	DrawBox((int)rightGoal->x1, (int)rightGoal->y1, (int)rightGoal->x2, (int)rightGoal->y2, COLOR_BLACK, FALSE);
+	EffectManager::Render();
 
 	ScoreManager::GetInstance()->Draw();
-
 	FadeManager::GetInstance()->Render();
 }
 
@@ -146,18 +153,17 @@ void GameManager::UpdateGamePlay() {
 	player2->Update();
 	puck->Update();
 
+	EffectManager::Update();
+	VECTOR pPos = puck->GetPosition();
+	VECTOR pVel = puck->GetVelocity();
+
+	HandleMalletCollision(player1, COLOR_ORANGE);
+	HandleMalletCollision(player2, COLOR_ORANGE);
+
 	CheckGoal();
 
-	if (ScoreManager::GetInstance()->GetPlayer1Score() >= GC::Score::WinScore) {
-		winnerID = 1;
-		FadeManager::GetInstance()->FadeOut(1.0f);
-		changeResult = true;
-	}
-	else if (ScoreManager::GetInstance()->GetPlayer2Score() >= GC::Score::WinScore) {
-		winnerID = 2;
-		FadeManager::GetInstance()->FadeOut(1.0f);
-		changeResult = true;
-	}
+	CheckWinCondition(1, ScoreManager::GetInstance()->GetPlayer1Score());
+	CheckWinCondition(2, ScoreManager::GetInstance()->GetPlayer2Score());
 }
 
 void GameManager::UpdateResult() {
@@ -165,7 +171,7 @@ void GameManager::UpdateResult() {
 	bool currentSpaceState = CheckHitKey(KEY_INPUT_SPACE);
 
 	if (currentSpaceState && !lastSpaceState) {
-		if (!changeResult) { 
+		if (!changeResult) {
 			FadeManager::GetInstance()->FadeOut(1.0f);
 			changeResult = true;
 		}
@@ -220,6 +226,41 @@ void GameManager::Delete() {
 	leftGoal = nullptr;
 	rightGoal = nullptr;
 
+	EffectManager::DestroyInstance();
+
 	DeleteGraph(modelHandle);
 	modelHandle = -1;
+}
+
+void GameManager::HandleMalletCollision(Mallet* _mallet, unsigned int _sparkColor) {
+	// パックの現在の情報を取得
+	VECTOR pPos = puck->GetPosition();
+	VECTOR pVel = puck->GetVelocity();
+
+	// 衝突判定を実行
+	if (CollisionUtility::CheckAndHandleMalletPuckCollision(
+		_mallet->GetPosition().x, _mallet->GetPosition().y, _mallet->GetRadius(),
+		pPos.x, pPos.y, puck->GetRadius(),
+		_mallet->GetVelocity().x, _mallet->GetVelocity().y,
+		pVel.x, pVel.y
+	)) {
+		// 当たっていたらパックに反映
+		puck->SetPosition(pPos);
+		puck->SetVelocity(pVel.x, pVel.y);
+
+		// 指定された色で火花を出す
+		EffectManager::AddSparks(pPos.x, pPos.y, _sparkColor);
+	}
+}
+
+void GameManager::CheckWinCondition(int _playerID, int _score) {
+	// すでにリザルト移行中なら何もしない（二重処理防止）
+	if (changeResult) return;
+
+	// 渡されたスコアが勝利スコアに達しているか
+	if (_score >= GC::Score::WinScore) {
+		winnerID = _playerID;
+		FadeManager::GetInstance()->FadeOut(1.0f);
+		changeResult = true;
+	}
 }

@@ -81,3 +81,7 @@ float MathUtility::EasInOut(float t) {
 		: 1.0f - powf(-2.0f * t + 2.0f, 2.0f) / 2.0f;
 
 }
+
+bool MathUtility::HasImpact(const VECTOR& v1, const VECTOR& v2, float threshold) {
+	return (std::abs(v1.x - v2.x) > threshold || std::abs(v1.y - v2.y) > threshold);
+}
