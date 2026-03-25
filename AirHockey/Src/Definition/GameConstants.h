@@ -1,6 +1,6 @@
 #pragma once
 #include "TypeDefinition.h"
-// このファイルはExcelから自動生成されました。
+// このファイルはExcelから自動生成されています。直接書き換えない
 
 namespace GameConfig {
     namespace Puck {
