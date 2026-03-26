@@ -19,13 +19,6 @@ public:
 		float minX, float maxX,
 		float minY, float maxY);
 
-	static void CheckMalletPuckCollision(
-		float mx, float my, float mr,      // マレット
-		float& px, float& py, float pr,    // パック
-		float mvx, float mvy,              // マレットの速度
-		float& pvx, float& pvy             // パックの速度
-	);
-
 	static bool CheckAndHandleMalletPuckCollision(
 		float mx, float my, float mr,
 		float& px, float& py, float pr,

@@ -25,6 +25,9 @@
     <Filter Include="GameSystem">
       <UniqueIdentifier>{1f5e47d8-eb19-494a-ba25-30cb27d305de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject\Audio">
+      <UniqueIdentifier>{240c0754-0aaa-4207-9825-415d51093f99}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Component\Collider.cpp">
@@ -66,6 +69,12 @@
     </ClCompile>
     <ClCompile Include="Src\Manager\EffectManager.cpp">
       <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Manager\AudioManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\GameObject\Audio\Audio.cpp">
+      <Filter>GameObject\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +148,15 @@
       <Filter>Definition</Filter>
     </ClInclude>
     <ClInclude Include="Src\Definition\TypeDefinition.h">
+      <Filter>Definition</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Manager\AudioManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\GameObject\Audio\Audio.h">
+      <Filter>GameObject\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Definition\AudioDefine.h">
       <Filter>Definition</Filter>
     </ClInclude>
   </ItemGroup>

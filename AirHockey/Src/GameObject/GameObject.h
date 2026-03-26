@@ -205,6 +205,8 @@ public:		//	Getter ‚Æ Setter
 	 *	@return		std::stiring
 	 */
 	inline std::string GetTag() const { return tag; };
+
+	inline void SetTag(std::string _tag) { tag = _tag; }
 #pragma endregion
 #pragma endregion
 };

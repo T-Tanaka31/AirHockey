@@ -2,6 +2,8 @@
 #include "ScoreManager.h"
 #include "FadeManager.h"
 #include "EffectManager.h"
+#include "InputManager.h"
+#include "AudioManager.h"
 #include "../Definition/Definition.h"
 #include "../Utility/ColorUtility.h"
 #include "../Utility/CollisionUtility.h"
@@ -37,12 +39,18 @@ GameManager::GameManager()
 	, leftGoal(nullptr)
 	, rightGoal(nullptr)
 	, changeResult(false)
-	, modelHandle(0) {
+	, modelHandle(0)
+	, courtHandle(0)
+	, endInput(false){
 }
 
 void GameManager::Init() {
 
 	modelHandle = LoadGraph("Res/背景4.png");
+
+	courtHandle = LoadGraph("Res/court.png");
+
+	AudioManager::GetInstance()->LoadAll();
 
 	player1 = new Mallet(
 		GC::Mallet::Player1StartPos,
@@ -86,6 +94,10 @@ void GameManager::Init() {
 }
 
 void GameManager::Update() {
+	
+	if (InputManager::GetInstance()->IsButtonDown(1, XINPUT_BUTTON_BACK) || InputManager::GetInstance()->IsButtonDown(0, XINPUT_BUTTON_BACK)) {
+		endInput = true;
+	}
 
 	if (changeResult) {
 		FadeManager::GetInstance()->Update();
@@ -123,19 +135,21 @@ void GameManager::Update() {
 void GameManager::Render() {
 	if (state == GameState::Result) {
 		DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, modelHandle, TRUE);
-
-		if (winnerID == 1)
-			DrawString((int)GC::Court::HalfCourt.x - 300, (int)GC::Court::HalfCourt.y, "Player 1 WIN!", GetColor(255, 255, 0));
-		else if (winnerID == 2)
-			DrawString((int)GC::Court::HalfCourt.x - 300, (int)GC::Court::HalfCourt.y, "Player 2 WIN!", GetColor(255, 255, 0));
-
 		color = ColorUtility::ToRainbowColor(color);
 
-		DrawString((int)GC::Court::HalfCourt.x - 600, (int)GC::Court::HalfCourt.y + 200, "Press SPACE to Restart", color);
+		if (winnerID == 1)
+			DrawString((int)GC::Court::HalfCourt.x - 300, (int)GC::Court::HalfCourt.y, "Player 1 WIN!", color);
+		else if (winnerID == 2)
+			DrawString((int)GC::Court::HalfCourt.x - 300, (int)GC::Court::HalfCourt.y, "Player 2 WIN!", color);
+
+
+		DrawString((int)GC::Court::HalfCourt.x - 600, (int)GC::Court::HalfCourt.y + 200, "Press Start to Restart", COLOR_WHITE);
 
 		FadeManager::GetInstance()->Render();
 		return;
 	}
+
+	DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, courtHandle, true);
 
 	puck->Render();
 	player1->Render();
@@ -144,6 +158,9 @@ void GameManager::Render() {
 	EffectManager::Render();
 
 	ScoreManager::GetInstance()->Draw();
+	if (ScoreManager::GetInstance()->GetPlayer1Score() == 0 && ScoreManager::GetInstance()->GetPlayer2Score() == 0)
+		DrawString((int)GC::Court::HalfCourt.x - 320, (int)WINDOW_HEIGHT - 100, "Win by a 7-point margin", COLOR_RED);
+
 	FadeManager::GetInstance()->Render();
 }
 
@@ -157,9 +174,6 @@ void GameManager::UpdateGamePlay() {
 	VECTOR pPos = puck->GetPosition();
 	VECTOR pVel = puck->GetVelocity();
 
-	HandleMalletCollision(player1, COLOR_ORANGE);
-	HandleMalletCollision(player2, COLOR_ORANGE);
-
 	CheckGoal();
 
 	CheckWinCondition(1, ScoreManager::GetInstance()->GetPlayer1Score());
@@ -167,18 +181,15 @@ void GameManager::UpdateGamePlay() {
 }
 
 void GameManager::UpdateResult() {
-	static bool lastSpaceState = false;
-	bool currentSpaceState = CheckHitKey(KEY_INPUT_SPACE);
 
-	if (currentSpaceState && !lastSpaceState) {
+	int restartInput = InputManager::GetInstance()->IsButtonDown(1, XINPUT_BUTTON_START) || InputManager::GetInstance()->IsButtonDown(0, XINPUT_BUTTON_START);
+
+	if (restartInput) {
 		if (!changeResult) {
 			FadeManager::GetInstance()->FadeOut(1.0f);
 			changeResult = true;
 		}
 	}
-
-	// 状態を更新
-	lastSpaceState = currentSpaceState;
 }
 
 void GameManager::CheckGoal() {
@@ -186,6 +197,7 @@ void GameManager::CheckGoal() {
 	const float r = puck->GetRadius();
 
 	if (pos.x + r < leftGoal->x2) {
+		AudioManager::GetInstance()->PlayOneShot("Goal");
 		ScoreManager::GetInstance()->AddScore(2);
 		player2->SetRainbow(true);
 		puck->StartReturn(GC::PuckSpawn::LeftSpawn(), GC::PuckSpawn::LeftTarget(), VGet(-0.5f, 1.5f, 0));
@@ -193,6 +205,7 @@ void GameManager::CheckGoal() {
 	}
 
 	if (pos.x - r > rightGoal->x1) {
+		AudioManager::GetInstance()->PlayOneShot("Goal");
 		ScoreManager::GetInstance()->AddScore(1);
 		player1->SetRainbow(true);
 		puck->StartReturn(GC::PuckSpawn::RightSpawn(), GC::PuckSpawn::RightTarget(), VGet(0.5f, 1.5f, 0));
@@ -230,27 +243,6 @@ void GameManager::Delete() {
 
 	DeleteGraph(modelHandle);
 	modelHandle = -1;
-}
-
-void GameManager::HandleMalletCollision(Mallet* _mallet, unsigned int _sparkColor) {
-	// パックの現在の情報を取得
-	VECTOR pPos = puck->GetPosition();
-	VECTOR pVel = puck->GetVelocity();
-
-	// 衝突判定を実行
-	if (CollisionUtility::CheckAndHandleMalletPuckCollision(
-		_mallet->GetPosition().x, _mallet->GetPosition().y, _mallet->GetRadius(),
-		pPos.x, pPos.y, puck->GetRadius(),
-		_mallet->GetVelocity().x, _mallet->GetVelocity().y,
-		pVel.x, pVel.y
-	)) {
-		// 当たっていたらパックに反映
-		puck->SetPosition(pPos);
-		puck->SetVelocity(pVel.x, pVel.y);
-
-		// 指定された色で火花を出す
-		EffectManager::AddSparks(pPos.x, pPos.y, _sparkColor);
-	}
 }
 
 void GameManager::CheckWinCondition(int _playerID, int _score) {

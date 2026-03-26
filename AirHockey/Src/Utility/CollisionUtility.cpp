@@ -67,25 +67,6 @@ void CollisionUtility::CheckAndReflectWall(
 	}
 }
 
-void CollisionUtility::CheckMalletPuckCollision(
-	float mx, float my, float mr,
-	float& px, float& py, float pr,
-	float mvx, float mvy,
-	float& pvx, float& pvy
-) {
-	float nx = px - mx;
-	float ny = py - my;
-	MathUtility::Normalize(nx, ny);
-
-	MathUtility::Reflect(pvx, pvy, nx, ny, pvx, pvy);
-
-	pvx += mvx * 0.8f;
-	pvy += mvy * 0.8f;
-
-	pvx *= 1.25f;
-	pvy *= 1.25f;
-}
-
 bool CollisionUtility::CheckAndHandleMalletPuckCollision(
 	float mx, float my, float mr,
 	float& px, float& py, float pr,

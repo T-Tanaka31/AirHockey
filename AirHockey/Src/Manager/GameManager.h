@@ -50,12 +50,18 @@ private:
 
 	int color = 0;
 
+	int courtHandle;
+
+	bool endInput;
+
 public:
 	void Init();
 	void Update();
 	void Render();
 
 	void Delete();
+
+	inline bool GetIsEnd() { return endInput; }
 
 private:
 	//	“à•”ˆ—
@@ -66,8 +72,6 @@ private:
 	void ResetRound();
 
 	void ResetGame();
-
-	void HandleMalletCollision(Mallet* _mallet, unsigned int _sparkColor);
 
 	void CheckWinCondition(int _playerID, int _score);
 };

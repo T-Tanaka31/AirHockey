@@ -56,11 +56,6 @@ void Puck::Update() {
 		0.0f, WINDOW_HEIGHT
 	);
 
-	if (MathUtility::HasImpact(prevVelocity, velocity, 0.5f)) {
-		// 火花エフェクトを発生させる
-		EffectManager::AddSparks(position.x, position.y, COLOR_YELLOW);
-	}
-
 	float maxSpeed = GameConfig::Puck::MaxSpeed;
 	float speed = MathUtility::Length(velocity.x, velocity.y);
 

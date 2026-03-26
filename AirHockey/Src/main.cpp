@@ -5,6 +5,7 @@
 #include "Manager/InputManager.h"
 #include "Manager/ScoreManager.h"
 #include "Manager/TimeManager.h"
+#include "Manager/AudioManager.h"
 #include "Manager/GameManager.h"
 
 /*
@@ -24,6 +25,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, FPS);
 	//	起動時のウィンドウのモード設定する
 	ChangeWindowMode(TRUE);		//	true : Windowモード, false : FullScreen
+
+	SetMainWindowText("AirHockey");
+
 	//	背景色の設定する
 	SetBackgroundColor(196, 196, 196);
 
@@ -57,9 +61,6 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//	============================================================
 	//	FPS調整用
 	int time;
-
-	int CourtHandle = LoadGraph("Res/court.png");
-
 	GameManager::GetInstance()->Init();
 	//	============================================================
 	//		ゲームのメインループ
@@ -68,6 +69,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//	ウィンドウのメッセージを処理する
 		if (ProcessMessage() == -1)
 			break;
+
+		if (GameManager::GetInstance()->GetIsEnd()) break;
 
 		//	FPSの調整
 		time = GetNowCount();
@@ -81,6 +84,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		InputManager::GetInstance()->Update();
 		ScoreManager::GetInstance()->Update();
 		TimeManager::GetInstance()->Update();
+		AudioManager::GetInstance()->Update();
 		GameManager::GetInstance()->Update();
 
 		//	画面をクリアする
@@ -89,17 +93,12 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		//	============================================================
 		//		ゲームの描画処理	処理順に注意
 		//	============================================================
-		DrawExtendGraph(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, CourtHandle, true);
-
 		GameManager::GetInstance()->Render();
 
 		// 画面の更新
 		ScreenFlip();
 		// DXライブラリの終了
 		if (ProcessMessage() != 0) break;
-
-		//	裏画面と表画面を切り替える
-		//ScreenFlip();
 
 		//	処理が早すぎた場合に待つ
 		/*while (1) {
@@ -115,10 +114,10 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//	============================================================
 	//		ゲームの解放処理
 	//	============================================================ 
-	GameManager::DestroyInstance();
 	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();
 	ScoreManager::DestroyInstance();
+	AudioManager::DestroyInstance();
 	GameManager::DestroyInstance();
 	//	============================================================
 	//		DxLibの解放処理

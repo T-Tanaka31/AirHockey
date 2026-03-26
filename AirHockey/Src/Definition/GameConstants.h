@@ -6,7 +6,7 @@ namespace GameConfig {
     namespace Puck {
         static constexpr float Radius = 50.0f; // 半径
         static constexpr float Friction = 0.99f; // 摩擦抵抗
-        static constexpr float  MaxSpeed = 85.0f; // 最高速度
+        static constexpr float  MaxSpeed = 80.0f; // 最高速度
         static constexpr float PushPower = 10.0f; // 押し出す力
     }
     namespace Mallet {
@@ -19,7 +19,7 @@ namespace GameConfig {
     namespace Goal {
         static constexpr int Top = 310; // ゴール範囲(上)
         static constexpr int Bottom = 775; // ゴール範囲(下)
-        static constexpr int Width = -80; // ゴール範囲(奥)
+        static constexpr int Width = -50; // ゴール範囲(奥)
     }
     namespace Court {
         static constexpr float Left = 0.0f; // コート範囲(左)

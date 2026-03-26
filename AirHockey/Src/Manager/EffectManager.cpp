@@ -35,8 +35,8 @@ void EffectManager::AddSparks(float _x, float _y, unsigned int _color) {
 		// 全方向にランダムに飛ばす
 		float angle = (float)(rand() % 360) * (3.14159f / 180.0f);
 		float speed = (float)(rand() % 8 + 2);
-		p.vx = cos(angle) * speed;
-		p.vy = sin(angle) * speed;
+		p.vx = (float)cos(angle) * speed;
+		p.vy = (float)sin(angle) * speed;
 
 		p.maxLife = 10 + rand() % 20; // 10〜30フレームで消える
 		p.life = p.maxLife;
