@@ -46,8 +46,14 @@ float MathUtility::Dot(float ax, float ay, float bx, float by) {
 void MathUtility::Reflect(float vx, float vy, float nx, float ny, float& outX, float& outY) {
 	float dot = Dot(vx, vy, nx, ny);
 
-	outX = vx - 2.0f * dot * nx;
-	outY = vy - 2.0f * dot * ny;
+	float rx = vx - 2.0f * dot * nx;
+	float ry = vy - 2.0f * dot * ny;
+
+	outX = rx;
+	outY = ry;
+
+	/*outX = vx - 2.0f * dot * nx;
+	outY = vy - 2.0f * dot * ny;*/
 }
 
 //	値を min〜max に収める
@@ -64,7 +70,8 @@ float MathUtility::Lerp(float a, float b, float t) {
 }
 
 float MathUtility::Repeat(float t, float length) {
-	return t - float(t / length) * length;
+	float res = fmodf(t, length);
+	return res < 0 ? res + length : res;
 }
 
 float MathUtility::EaseIn(float t) {

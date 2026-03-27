@@ -159,7 +159,7 @@ void GameManager::Render() {
 
 	ScoreManager::GetInstance()->Draw();
 	if (ScoreManager::GetInstance()->GetPlayer1Score() == 0 && ScoreManager::GetInstance()->GetPlayer2Score() == 0)
-		DrawString((int)GC::Court::HalfCourt.x - 320, (int)WINDOW_HEIGHT - 100, "Win by a 7-point margin", COLOR_RED);
+		DrawFormatString((int)GC::Court::HalfCourt.x - 440, (int)WINDOW_HEIGHT - 100, COLOR_RED, "Score %d points first to win", GC::Score::WinScore);
 
 	FadeManager::GetInstance()->Render();
 }
@@ -170,7 +170,7 @@ void GameManager::UpdateGamePlay() {
 	player2->Update();
 	puck->Update();
 
-	EffectManager::Update();
+	
 	VECTOR pPos = puck->GetPosition();
 	VECTOR pVel = puck->GetVelocity();
 
@@ -238,8 +238,6 @@ void GameManager::Delete() {
 	puck = nullptr;
 	leftGoal = nullptr;
 	rightGoal = nullptr;
-
-	EffectManager::DestroyInstance();
 
 	DeleteGraph(modelHandle);
 	modelHandle = -1;

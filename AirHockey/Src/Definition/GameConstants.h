@@ -19,7 +19,7 @@ namespace GameConfig {
     namespace Goal {
         static constexpr int Top = 310; // ゴール範囲(上)
         static constexpr int Bottom = 775; // ゴール範囲(下)
-        static constexpr int Width = -50; // ゴール範囲(奥)
+        static constexpr int Width = -40; // ゴール範囲(奥)
     }
     namespace Court {
         static constexpr float Left = 0.0f; // コート範囲(左)

@@ -26,7 +26,7 @@ void Puck::Update() {
 	}
 
 	if (waitingAfterReturn) {
-		waitTimer += 1.0f / 60.0f;
+		waitTimer += 1.0f / FPS;
 
 		if (waitTimer >= waitDuration) {
 			waitingAfterReturn = false;
@@ -121,14 +121,16 @@ void Puck::UpdateReturn() {
 	position.y = MathUtility::Lerp(returnStartPos.y, targetPos.y, t);
 
 	// ★ コート内に入ったら戻り終了
-	if (GameConfig::Court::IsInside(position)) {
+	if (GameConfig::Court::IsInside(position) || t >= 1.0f) {
 		isReturning = false;
 		waitingAfterReturn = true;
 		waitTimer = 0.0f;
+
+		if (t >= 1.0f) position = targetPos;
 	}
 
-	if (t >= 1.0f)
-		isReturning = false;
+	//if (t >= 1.0f)
+	//	isReturning = false;
 
 }
 

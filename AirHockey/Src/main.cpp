@@ -7,6 +7,7 @@
 #include "Manager/TimeManager.h"
 #include "Manager/AudioManager.h"
 #include "Manager/GameManager.h"
+#include "Manager/EffectManager.h"
 
 /*
  *	@brief		Windowプログラムのエントリーポイント
@@ -21,6 +22,13 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	//	============================================================
 	//		DxLibの初期化処理	理解するまで触らない
 	//	============================================================
+	
+#if _DEBUG
+	SetOutApplicationLogValidFlag(TRUE);
+#else
+	SetOutApplicationLogValidFlag(FALSE);
+#endif
+	
 	//	ウィンドウのサイズを変更する
 	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, FPS);
 	//	起動時のウィンドウのモード設定する
@@ -84,6 +92,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 		InputManager::GetInstance()->Update();
 		ScoreManager::GetInstance()->Update();
 		TimeManager::GetInstance()->Update();
+		EffectManager::GetInstance()->Update();
 		AudioManager::GetInstance()->Update();
 		GameManager::GetInstance()->Update();
 
@@ -117,12 +126,17 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 	TimeManager::DestroyInstance();
 	InputManager::DestroyInstance();
 	ScoreManager::DestroyInstance();
+	EffectManager::DestroyInstance();
 	AudioManager::DestroyInstance();
 	GameManager::DestroyInstance();
 	//	============================================================
 	//		DxLibの解放処理
 	//	============================================================
 	//	DxLibの終了
+
+	InitSoundMem();
+	InitGraph();
+	InitFontToHandle();
 
 	DxLib_End();
 
